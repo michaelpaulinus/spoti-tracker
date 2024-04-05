@@ -20,7 +20,14 @@
           style="display: flex; justify-content: center"
         >
           <v-slide-x-transition>
-            <v-card width="240" rounded elevation="12" :loading="isLoading">
+            <v-card
+              width="240"
+              rounded
+              elevation="12"
+              :loading="isLoading"
+              :href="item.external_urls.spotify"
+              target="_blank"
+            >
               <v-img :src="item.images[1].url"></v-img>
               <v-card-title style="display: flex; justify-content: center">
                 {{ item.name }}
@@ -49,7 +56,6 @@
 import type Artist from "@/interfaces/Artist";
 import UserTopItems from "@/services/UserTopItems";
 import { tokenStore } from "@/stores/tokenStore";
-import HeaderBar from "@/components/HeaderBar.vue";
 
 export default {
   data() {
