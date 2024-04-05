@@ -2,76 +2,22 @@
   <div style="display: flex; justify-content: center; align-items: center">
     <v-btn rounded @click="spotifyAuth()">Login</v-btn>
   </div>
-  <div>
-    <v-btn rounded @click="getTopArtists()">Display Artists</v-btn>
-    <v-btn rounded @click="getTopTracks()">Display Tracks</v-btn>
-  </div>
-
-  <div>
-    <h1>My Top Artists</h1>
-    <v-row style="display: flex; justify-content: space-evenly">
-      <v-col
-        cols="2"
-        v-for="(item, index) in myTopArtists"
-        style="display: flex; justify-content: center"
-      >
-        <v-card width="200" rounded elevation="12">
-          <v-img :src="item.images[0].url"></v-img>
-          <v-card-title style="display: flex; justify-content: center">
-            {{ item.name }}</v-card-title
-          >
-        </v-card>
-      </v-col>
-    </v-row>
-  </div>
-
-  <div>
-    <h1>My Top Tracks</h1>
-    <div>{{ myTopTracks }}</div>
-  </div>
 </template>
 
 <script lang="ts">
 import router from "@/router";
 import { tokenStore } from "@/stores/tokenStore";
-import UserTopItems from "@/services/UserTopItems";
-import type Artist from "@/interfaces/Artist";
 
 export default {
   data() {
     return {
       returnedAccessToken: "",
-      defaultTimeRange: "long_term",
-      myTopArtists: [] as Artist[],
-      myTopTracks: [] as Artist[],
     };
   },
 
   setup() {},
 
   methods: {
-    getTopArtists() {
-      UserTopItems.fetchTopArtists(
-        this.returnedAccessToken,
-        this.defaultTimeRange
-      )
-        .then((res) => {
-          this.myTopArtists = res.data.items;
-        })
-        .catch((err) => console.log(err));
-    },
-
-    getTopTracks() {
-      UserTopItems.fetchTopTracks(
-        this.returnedAccessToken,
-        this.defaultTimeRange
-      )
-        .then((res) => {
-          this.myTopTracks = res.data;
-        })
-        .catch((err) => console.log(err));
-    },
-
     async spotifyAuth() {
       const clientId = "e466a474a3de4973ba5fa2b9e4cd9909";
       const params = new URLSearchParams(window.location.search);
