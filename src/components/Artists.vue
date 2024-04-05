@@ -62,7 +62,6 @@ export default {
     return {
       defaultTimeRange: "long_term",
       myTopArtists: [] as Artist[],
-      myTopTracks: [] as Artist[],
       returnedAccessToken: "",
       accessTokenStore: tokenStore(),
       clientId: "e466a474a3de4973ba5fa2b9e4cd9909",
@@ -99,17 +98,6 @@ export default {
         .catch((err) => console.log(err));
 
       this.isLoading = false;
-    },
-
-    getTopTracks() {
-      UserTopItems.fetchTopTracks(
-        this.returnedAccessToken,
-        this.defaultTimeRange
-      )
-        .then((res) => {
-          this.myTopTracks = res.data;
-        })
-        .catch((err) => console.log(err));
     },
 
     async getAccessToken(clientId: string, code: string): Promise<string> {
