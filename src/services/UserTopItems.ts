@@ -1,4 +1,5 @@
 import type { TopArtistsResponse } from "@/interfaces/TopArtists";
+import type { TopTracksResponse } from "@/interfaces/TopTracks";
 import axios from "axios";
 
 class UserTopItems {
@@ -14,7 +15,7 @@ class UserTopItems {
   }
 
   async fetchTopTracks(token: string, time_range: string) {
-    return await axios.get(
+    return await axios.get<TopTracksResponse>(
       `https://api.spotify.com/v1/me/top/tracks?time_range=${time_range}&limit=5`,
       {
         headers: {
