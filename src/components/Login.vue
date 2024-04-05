@@ -1,6 +1,13 @@
 <template>
   <div style="display: flex; justify-content: center; align-items: center">
-    <v-btn rounded @click="spotifyAuth()">Login</v-btn>
+    <v-btn
+      rounded
+      append-icon="mdi-spotify"
+      color="green"
+      size="large"
+      @click="spotifyAuth()"
+      >Login</v-btn
+    >
   </div>
 </template>
 
