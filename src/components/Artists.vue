@@ -49,6 +49,7 @@
 import type Artist from "@/interfaces/Artist";
 import UserTopItems from "@/services/UserTopItems";
 import { tokenStore } from "@/stores/tokenStore";
+import HeaderBar from "@/components/HeaderBar.vue";
 
 export default {
   data() {
