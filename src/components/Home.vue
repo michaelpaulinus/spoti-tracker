@@ -18,7 +18,12 @@
               :href="item.external_urls.spotify"
               target="_blank"
             >
-              <v-img :src="item.images[1].url"></v-img>
+              <v-img
+                :src="item.images[1].url"
+                cover
+                height="140"
+                width="220"
+              ></v-img>
               <v-card-title style="display: flex; justify-content: center">
                 {{ item.name }}
               </v-card-title>

@@ -28,7 +28,7 @@
               :href="item.external_urls.spotify"
               target="_blank"
             >
-              <v-img :src="item.album.images[0].url"></v-img>
+              <v-img :src="item.album.images[0].url" cover></v-img>
               <v-card-title style="display: flex; justify-content: center">
                 {{ item.name }}
               </v-card-title>
