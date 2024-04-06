@@ -1,6 +1,6 @@
 <template>
   <div style="display: flex; justify-content: center">
-    <v-tabs v-model="tab">
+    <v-tabs v-model="tab" slider-color="green">
       <v-tab value="short_term" @click="changeTimePeriod()">6 weeks</v-tab>
       <v-tab value="medium_term" @click="changeTimePeriod()">6 months</v-tab>
       <v-tab value="long_term" @click="changeTimePeriod()">1 year</v-tab>

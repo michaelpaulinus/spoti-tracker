@@ -24,7 +24,7 @@
     </v-navigation-drawer>
 
     <v-app-bar>
-      <v-tabs v-model="tab" style="margin: 0 auto">
+      <v-tabs v-model="tab" style="margin: 0 auto" slider-color="green">
         <v-tab value="short_term" @click="changeTimePeriod()">6 weeks</v-tab>
         <v-tab value="medium_term" @click="changeTimePeriod()">6 months</v-tab>
         <v-tab value="long_term" @click="changeTimePeriod()">1 year</v-tab>
