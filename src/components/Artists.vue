@@ -52,6 +52,9 @@
         fixed-header
         :loading="isLoading"
       >
+        <template v-slot:item.followers.total="{ item }">
+          {{ formatNumbers(item.followers.total) }}
+        </template>
       </v-data-table-virtual>
     </div>
   </div>
@@ -72,6 +75,7 @@ export default {
       clientId: "e466a474a3de4973ba5fa2b9e4cd9909",
       artistHeaders: [
         { title: "Name", value: "name" },
+        { title: "Genres", value: "genres[0]" },
         { title: "Followers", value: "followers.total" },
         { title: "Popularity", value: "popularity" },
       ],
@@ -98,6 +102,10 @@ export default {
         .catch((err) => console.log(err));
 
       this.isLoading = false;
+    },
+
+    formatNumbers(num: number) {
+      return num.toLocaleString("en-US");
     },
   },
 };

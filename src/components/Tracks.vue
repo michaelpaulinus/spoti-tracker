@@ -52,6 +52,11 @@
         fixed-header
         :loading="isLoading"
       >
+        <template v-slot:item.artists="{ item }">
+          <td>
+            {{ getArtistNames(item.artists) }}
+          </td>
+        </template>
       </v-data-table-virtual>
     </div>
   </div>
@@ -79,7 +84,7 @@ export default {
       ],
       trackHeaders: [
         { title: "Name", value: "name" },
-        { title: "Artists", value: "artists[0].name" },
+        { title: "Artists", value: "artists" },
         { title: "Album", value: "album.name" },
         { title: "Popularity", value: "popularity" },
       ],
