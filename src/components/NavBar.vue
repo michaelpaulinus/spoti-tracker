@@ -30,11 +30,16 @@
         <v-tab value="long_term" @click="changeTimePeriod()">1 year</v-tab>
       </v-tabs>
     </v-app-bar>
+
+    <v-main>
+      <RouterView></RouterView>
+    </v-main>
   </v-layout>
 </template>
 
 <script lang="ts">
 import router from "@/router";
+import { RouterLink, RouterView } from "vue-router";
 
 export default {
   data() {
