@@ -112,8 +112,7 @@ export default {
       defaultTimeRange: "long_term",
       myTopArtists: [] as Artist[],
       myTopTracks: [] as Track[],
-      returnedAccessToken: "",
-      accessTokenStore: tokenStore(),
+      accessToken: "",
       clientId: "e466a474a3de4973ba5fa2b9e4cd9909",
       artistHeaders: [
         { title: "Name", value: "name" },
@@ -130,10 +129,19 @@ export default {
       isLoading: true,
     };
   },
+  setup() {
+    const store = tokenStore();
+
+    return {
+      store,
+    };
+  },
+
   async mounted() {
     const params = new URLSearchParams(window.location.search);
     const code = params.get("code") || "";
-    this.returnedAccessToken = await this.getAccessToken(this.clientId, code);
+    this.accessToken = await this.getAccessToken(this.clientId, code);
+    this.store.setToken(this.accessToken);
 
     this.getTopArtists();
 
@@ -147,10 +155,7 @@ export default {
     },
 
     getTopArtists() {
-      UserTopItems.fetchTopArtists(
-        this.returnedAccessToken,
-        this.defaultTimeRange
-      )
+      UserTopItems.fetchTopArtists(this.accessToken, this.defaultTimeRange)
         .then((res) => {
           this.myTopArtists = res.data.items;
         })
@@ -160,10 +165,7 @@ export default {
     },
 
     getTopTracks() {
-      UserTopItems.fetchTopTracks(
-        this.returnedAccessToken,
-        this.defaultTimeRange
-      )
+      UserTopItems.fetchTopTracks(this.accessToken, this.defaultTimeRange)
         .then((res) => {
           this.myTopTracks = res.data.items;
           console.log(this.myTopTracks);

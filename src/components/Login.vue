@@ -18,7 +18,7 @@ import { tokenStore } from "@/stores/tokenStore";
 export default {
   data() {
     return {
-      returnedAccessToken: "",
+      accessToken: "",
     };
   },
 
@@ -36,7 +36,7 @@ export default {
         const accessToken = await getAccessToken(clientId, code);
         const store = tokenStore();
         store.setToken(accessToken);
-        this.returnedAccessToken = accessToken;
+        this.accessToken = accessToken;
         const profile = await fetchProfile(accessToken);
         console.log(accessToken);
         console.log(profile);

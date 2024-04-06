@@ -12,9 +12,6 @@ export const tokenStore = defineStore("tokenStore", {
     setToken(token: string) {
       this.token = token;
     },
-    clearToken() {
-      this.token = "";
-    },
   },
   getters: {
     getToken(): string {

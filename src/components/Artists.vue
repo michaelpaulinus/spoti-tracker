@@ -62,7 +62,7 @@ export default {
     return {
       defaultTimeRange: "long_term",
       myTopArtists: [] as Artist[],
-      returnedAccessToken: "",
+      accessToken: "",
       accessTokenStore: tokenStore(),
       clientId: "e466a474a3de4973ba5fa2b9e4cd9909",
       artistHeaders: [
@@ -75,10 +75,7 @@ export default {
     };
   },
   async mounted() {
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get("code") || "";
-    this.returnedAccessToken = await this.getAccessToken(this.clientId, code);
-
+    this.accessToken = this.accessTokenStore.getToken;
     this.getTopArtists();
   },
   methods: {
@@ -86,11 +83,9 @@ export default {
       this.defaultTimeRange = this.tab;
       this.getTopArtists();
     },
+
     getTopArtists() {
-      UserTopItems.fetchTopArtists(
-        this.returnedAccessToken,
-        this.defaultTimeRange
-      )
+      UserTopItems.fetchTopArtists(this.accessToken, this.defaultTimeRange)
         .then((res) => {
           this.myTopArtists = res.data.items;
           console.log(this.myTopArtists);
@@ -98,27 +93,6 @@ export default {
         .catch((err) => console.log(err));
 
       this.isLoading = false;
-    },
-
-    async getAccessToken(clientId: string, code: string): Promise<string> {
-      const verifier = localStorage.getItem("verifier");
-
-      const params = new URLSearchParams();
-      params.append("client_id", clientId);
-      params.append("grant_type", "authorization_code");
-      params.append("code", code);
-      params.append("redirect_uri", "http://localhost:5173/home");
-      params.append("code_verifier", verifier!);
-
-      const result = await fetch("https://accounts.spotify.com/api/token", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: params,
-      });
-
-      const { access_token } = await result.json();
-
-      return access_token;
     },
   },
 };
