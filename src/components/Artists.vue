@@ -16,7 +16,7 @@
       <v-row style="display: flex; justify-content: space-between">
         <v-col
           cols="2"
-          v-for="(item, index) in myTopArtists"
+          v-for="(item, index) in myTopArtists.slice(0, 5)"
           style="display: flex; justify-content: center"
         >
           <v-slide-x-transition>
