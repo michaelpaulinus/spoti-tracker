@@ -55,6 +55,9 @@
                 <v-card-title style="display: flex; justify-content: center">
                   {{ item.name }}
                 </v-card-title>
+                <v-card-subtitle style="display: flex; justify-content: center">
+                  {{ getArtistNames(item.artists) }}
+                </v-card-subtitle>
               </v-card>
             </v-slide-x-transition>
           </v-col>
@@ -121,6 +124,10 @@ export default {
         .catch((err) => console.log(err));
 
       this.isLoading = false;
+    },
+
+    getArtistNames(artists: Artist[]) {
+      return artists.map((a) => a.name).join(", ");
     },
 
     getTopTracks() {
