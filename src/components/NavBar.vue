@@ -18,7 +18,9 @@
 
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn block @click="navigateToLogin()"> Logout </v-btn>
+          <v-btn block variant="outlined" @click="navigateToLogin()">
+            Logout
+          </v-btn>
         </div>
       </template>
     </v-navigation-drawer>
