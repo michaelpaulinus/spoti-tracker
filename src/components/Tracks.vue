@@ -25,8 +25,10 @@
               rounded
               elevation="12"
               :loading="isLoading"
-              :href="item.external_urls.spotify"
               target="_blank"
+              :href="item.external_urls.spotify"
+              @mouseover="previewTrack(item.preview_url)"
+              @mouseout="stopTrack()"
             >
               <v-img :src="item.album.images[0].url" cover></v-img>
               <v-card-title style="display: flex; justify-content: center">
@@ -83,6 +85,7 @@ export default {
       ],
       tab: "long_term",
       isLoading: true,
+      currentAudio: null as HTMLAudioElement | null,
     };
   },
   async mounted() {
@@ -115,6 +118,22 @@ export default {
         .catch((err) => console.log(err));
 
       this.isLoading = false;
+    },
+
+    previewTrack(trackUrl: string | null) {
+      this.stopTrack();
+
+      if (trackUrl !== null) {
+        this.currentAudio = new Audio(trackUrl);
+        this.currentAudio.play();
+      }
+    },
+
+    stopTrack() {
+      if (this.currentAudio) {
+        this.currentAudio.pause();
+        this.currentAudio.currentTime = 0;
+      }
     },
 
     getArtistNames(artists: Artist[]) {

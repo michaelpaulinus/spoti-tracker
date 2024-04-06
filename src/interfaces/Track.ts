@@ -56,7 +56,7 @@ export default interface Track {
   };
   name: string;
   popularity: number;
-  preview_url: string;
+  preview_url: string | null;
   track_number: number;
   type: string;
   uri: string;
