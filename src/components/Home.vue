@@ -1,4 +1,29 @@
 <template>
+  <v-layout>
+    <v-navigation-drawer>
+      <v-list-item title="My Spotify Wrapped"></v-list-item>
+      <v-divider></v-divider>
+      <v-list-item link prepend-icon="mdi-home" @click="navigateToHome()"
+        >Home</v-list-item
+      >
+      <v-list-item
+        link
+        prepend-icon="mdi-account-music"
+        @click="navigateToArtists()"
+        >Artists</v-list-item
+      >
+      <v-list-item link prepend-icon="mdi-music" @click="navigateToTracks()"
+        >Tracks</v-list-item
+      >
+
+      <template v-slot:append>
+        <div class="pa-2">
+          <v-btn block> Logout </v-btn>
+        </div>
+      </template>
+    </v-navigation-drawer>
+  </v-layout>
+
   <div style="display: flex; justify-content: center">
     <v-tabs v-model="tab">
       <v-tab value="short_term" @click="changeTimePeriod()">6 weeks</v-tab>
@@ -79,6 +104,7 @@ import type Artist from "@/interfaces/Artist";
 import type Track from "@/interfaces/Track";
 import UserTopItems from "@/services/UserTopItems";
 import { tokenStore } from "@/stores/tokenStore";
+import router from "@/router";
 
 export default {
   data() {
@@ -166,6 +192,18 @@ export default {
       const { access_token } = await result.json();
 
       return access_token;
+    },
+
+    navigateToHome() {
+      router.push("/home");
+    },
+
+    navigateToArtists() {
+      router.push("/artists");
+    },
+
+    navigateToTracks() {
+      router.push("/tracks");
     },
   },
 };
