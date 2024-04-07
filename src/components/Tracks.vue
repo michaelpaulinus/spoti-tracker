@@ -1,14 +1,4 @@
 <template>
-  <div style="display: flex; justify-content: center">
-    <v-tabs v-model="tab" slider-color="green">
-      <v-tab value="short_term" @click="changeTimePeriod()">6 weeks</v-tab>
-      <v-tab value="medium_term" @click="changeTimePeriod()">6 months</v-tab>
-      <v-tab value="long_term" @click="changeTimePeriod()">1 year</v-tab>
-    </v-tabs>
-  </div>
-
-  <br />
-
   <div style="margin: 0 auto">
     <h1>My Top Tracks</h1>
     <br />
@@ -88,7 +78,6 @@ export default {
         { title: "Album", value: "album.name" },
         { title: "Popularity", value: "popularity" },
       ],
-      tab: "long_term",
       isLoading: true,
       currentAudio: null as HTMLAudioElement | null,
     };
@@ -96,33 +85,24 @@ export default {
   async mounted() {
     this.accessToken = this.accessTokenStore.getToken;
     this.getTopTracks();
+    (this as any).$emitter.on("new_time_range", (timeRange: string) =>
+      this.changeTimePeriod(timeRange)
+    );
   },
   methods: {
-    changeTimePeriod() {
-      this.defaultTimeRange = this.tab;
-      this.getTopArtists();
+    changeTimePeriod(time: string) {
+      this.defaultTimeRange = time;
+      this.isLoading = true;
       this.getTopTracks();
-    },
-
-    getTopArtists() {
-      UserTopItems.fetchTopArtists(this.accessToken, this.defaultTimeRange)
-        .then((res) => {
-          this.myTopArtists = res.data.items;
-        })
-        .catch((err) => console.log(err));
-
-      this.isLoading = false;
     },
 
     getTopTracks() {
       UserTopItems.fetchTopTracks(this.accessToken, this.defaultTimeRange)
         .then((res) => {
           this.myTopTracks = res.data.items;
-          console.log(this.myTopTracks);
+          this.isLoading = false;
         })
         .catch((err) => console.log(err));
-
-      this.isLoading = false;
     },
 
     previewTrack(trackUrl: string | null) {
@@ -143,27 +123,6 @@ export default {
 
     getArtistNames(artists: Artist[]) {
       return artists.map((a) => a.name).join(", ");
-    },
-
-    async getAccessToken(clientId: string, code: string): Promise<string> {
-      const verifier = localStorage.getItem("verifier");
-
-      const params = new URLSearchParams();
-      params.append("client_id", clientId);
-      params.append("grant_type", "authorization_code");
-      params.append("code", code);
-      params.append("redirect_uri", "http://localhost:5173/home");
-      params.append("code_verifier", verifier!);
-
-      const result = await fetch("https://accounts.spotify.com/api/token", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: params,
-      });
-
-      const { access_token } = await result.json();
-
-      return access_token;
     },
   },
 };

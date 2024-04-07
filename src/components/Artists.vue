@@ -1,14 +1,4 @@
 <template>
-  <div style="display: flex; justify-content: center">
-    <v-tabs v-model="tab" slider-color="green">
-      <v-tab value="short_term" @click="changeTimePeriod()">6 weeks</v-tab>
-      <v-tab value="medium_term" @click="changeTimePeriod()">6 months</v-tab>
-      <v-tab value="long_term" @click="changeTimePeriod()">1 year</v-tab>
-    </v-tabs>
-  </div>
-
-  <br />
-
   <div style="margin: 0 auto">
     <h1>My Top Artists</h1>
     <br />
@@ -79,17 +69,24 @@ export default {
         { title: "Followers", value: "followers.total" },
         { title: "Popularity", value: "popularity" },
       ],
-      tab: "long_term",
       isLoading: true,
     };
   },
+  created() {},
+
   async mounted() {
     this.accessToken = this.accessTokenStore.getToken;
+
     this.getTopArtists();
+
+    (this as any).$emitter.on("new_time_range", (timeRange: string) =>
+      this.changeTimePeriod(timeRange)
+    );
   },
   methods: {
-    changeTimePeriod() {
-      this.defaultTimeRange = this.tab;
+    changeTimePeriod(time: string) {
+      this.defaultTimeRange = time;
+      this.isLoading = true;
       this.getTopArtists();
     },
 
@@ -97,11 +94,9 @@ export default {
       UserTopItems.fetchTopArtists(this.accessToken, this.defaultTimeRange)
         .then((res) => {
           this.myTopArtists = res.data.items;
-          console.log(this.myTopArtists);
+          this.isLoading = false;
         })
         .catch((err) => console.log(err));
-
-      this.isLoading = false;
     },
 
     formatNumbers(num: number) {

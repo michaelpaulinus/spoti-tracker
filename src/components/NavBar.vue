@@ -67,7 +67,9 @@ export default {
       router.push("/tracks");
     },
 
-    changeTimePeriod() {},
+    changeTimePeriod() {
+      (this as any).$emitter.emit("new_time_range", this.tab);
+    },
   },
 };
 </script>

@@ -98,7 +98,6 @@ export default {
         { title: "Album", value: "album.name" },
         { title: "Popularity", value: "popularity" },
       ],
-      tab: "long_term",
       isLoading: true,
     };
   },
@@ -119,16 +118,25 @@ export default {
     this.getTopArtists();
 
     this.getTopTracks();
+
+    (this as any).$emitter.on("new_time_range", (timeRange: string) =>
+      this.changeTimePeriod(timeRange)
+    );
   },
   methods: {
+    changeTimePeriod(time: string) {
+      this.defaultTimeRange = time;
+      this.isLoading = true;
+      this.getTopArtists();
+      this.getTopTracks();
+    },
     getTopArtists() {
       UserTopItems.fetchTopArtists(this.accessToken, this.defaultTimeRange)
         .then((res) => {
           this.myTopArtists = res.data.items;
+          this.isLoading = false;
         })
         .catch((err) => console.log(err));
-
-      this.isLoading = false;
     },
 
     getArtistNames(artists: Artist[]) {
@@ -139,11 +147,9 @@ export default {
       UserTopItems.fetchTopTracks(this.accessToken, this.defaultTimeRange)
         .then((res) => {
           this.myTopTracks = res.data.items;
-          console.log(this.myTopTracks);
+          this.isLoading = false;
         })
         .catch((err) => console.log(err));
-
-      this.isLoading = false;
     },
 
     async getAccessToken(clientId: string, code: string): Promise<string> {

@@ -10,6 +10,8 @@ import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 
+import mitt from "mitt";
+
 const vuetify = createVuetify({
   theme: {
     defaultTheme: "dark",
@@ -18,4 +20,10 @@ const vuetify = createVuetify({
   directives,
 });
 
-createApp(App).use(vuetify).use(createPinia()).use(router).mount("#app");
+const emitter = mitt();
+
+const app = createApp(App).use(vuetify).use(createPinia()).use(router);
+
+app.config.globalProperties.$emitter = emitter;
+
+app.mount("#app");
