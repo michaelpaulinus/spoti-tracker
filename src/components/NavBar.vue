@@ -1,6 +1,6 @@
 <template>
   <v-layout>
-    <v-navigation-drawer>
+    <v-navigation-drawer v-if="isAuth()">
       <v-list-item title="My Spotify Wrapped"></v-list-item>
       <v-divider></v-divider>
       <v-list-item link prepend-icon="mdi-home" @click="navigateToHome()"
@@ -25,7 +25,7 @@
       </template>
     </v-navigation-drawer>
 
-    <v-app-bar>
+    <v-app-bar v-if="isAuth()">
       <v-tabs v-model="tab" style="margin: 0 auto" slider-color="green">
         <v-tab value="short_term" @click="changeTimePeriod()">6 weeks</v-tab>
         <v-tab value="medium_term" @click="changeTimePeriod()">6 months</v-tab>
@@ -42,17 +42,26 @@
 <script lang="ts">
 import router from "@/router";
 import { RouterLink, RouterView } from "vue-router";
+import { tokenStore } from "@/stores/tokenStore";
 
 export default {
   data() {
     return {
       tab: "long_term",
+      accessTokenStore: tokenStore(),
     };
   },
 
+  created() {},
+
   methods: {
+    isAuth() {
+      return this.accessTokenStore.isAuthenticated;
+    },
+
     navigateToLogin() {
       router.push("/");
+      this.accessTokenStore.clearToken();
     },
 
     navigateToHome() {
