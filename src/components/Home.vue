@@ -101,6 +101,7 @@ export default {
       isLoading: true,
     };
   },
+
   setup() {
     const store = tokenStore();
 
@@ -109,7 +110,7 @@ export default {
     };
   },
 
-  async mounted() {
+  async created() {
     const params = new URLSearchParams(window.location.search);
     const code = params.get("code") || "";
     this.accessToken = await this.getAccessToken(this.clientId, code);
@@ -118,11 +119,14 @@ export default {
     this.getTopArtists();
 
     this.getTopTracks();
+  },
 
+  mounted() {
     (this as any).$emitter.on("new_time_range", (timeRange: string) =>
       this.changeTimePeriod(timeRange)
     );
   },
+
   methods: {
     changeTimePeriod(time: string) {
       this.defaultTimeRange = time;

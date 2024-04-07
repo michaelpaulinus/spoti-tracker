@@ -72,17 +72,18 @@ export default {
       isLoading: true,
     };
   },
-  created() {},
 
-  async mounted() {
+  created() {
     this.accessToken = this.accessTokenStore.getToken;
-
     this.getTopArtists();
+  },
 
+  mounted() {
     (this as any).$emitter.on("new_time_range", (timeRange: string) =>
       this.changeTimePeriod(timeRange)
     );
   },
+
   methods: {
     changeTimePeriod(time: string) {
       this.defaultTimeRange = time;
