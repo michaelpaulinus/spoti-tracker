@@ -18,14 +18,16 @@ const router = createRouter({
       component: Home,
     },
     {
-      path: "/artists",
+      path: "/artists/:timeRange",
       name: "Artists",
       component: Artists,
+      props: true,
     },
     {
-      path: "/tracks",
+      path: "/tracks/:timeRange",
       name: "Tracks",
       component: Tracks,
+      props: true,
     },
   ],
 });

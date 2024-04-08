@@ -69,11 +69,11 @@ export default {
     },
 
     navigateToArtists() {
-      router.push("/artists");
+      router.push({ name: "Artists", params: { timeRange: this.tab } });
     },
 
     navigateToTracks() {
-      router.push("/tracks");
+      router.push({ name: "Tracks", params: { timeRange: this.tab } });
     },
 
     changeTimePeriod() {

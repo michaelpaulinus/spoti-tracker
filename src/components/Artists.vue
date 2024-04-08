@@ -75,10 +75,18 @@ export default {
 
   created() {
     this.accessToken = this.accessTokenStore.getToken;
-    this.getTopArtists();
+  },
+  props: {
+    timeRange: {
+      type: String,
+      required: true,
+    },
   },
 
   mounted() {
+    if (this.timeRange) {
+      this.changeTimePeriod(this.timeRange);
+    }
     (this as any).$emitter.on("new_time_range", (timeRange: string) =>
       this.changeTimePeriod(timeRange)
     );
@@ -88,11 +96,11 @@ export default {
     changeTimePeriod(time: string) {
       this.defaultTimeRange = time;
       this.isLoading = true;
-      this.getTopArtists();
+      this.getTopArtists(time);
     },
 
-    getTopArtists() {
-      UserTopItems.fetchTopArtists(this.accessToken, this.defaultTimeRange)
+    getTopArtists(time: string) {
+      UserTopItems.fetchTopArtists(this.accessToken, time)
         .then((res) => {
           this.myTopArtists = res.data.items;
           this.isLoading = false;

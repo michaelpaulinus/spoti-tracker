@@ -85,10 +85,19 @@ export default {
 
   created() {
     this.accessToken = this.accessTokenStore.getToken;
-    this.getTopTracks();
+  },
+
+  props: {
+    timeRange: {
+      type: String,
+      required: true,
+    },
   },
 
   mounted() {
+    if (this.timeRange) {
+      this.changeTimePeriod(this.timeRange);
+    }
     (this as any).$emitter.on("new_time_range", (timeRange: string) =>
       this.changeTimePeriod(timeRange)
     );
@@ -98,11 +107,11 @@ export default {
     changeTimePeriod(time: string) {
       this.defaultTimeRange = time;
       this.isLoading = true;
-      this.getTopTracks();
+      this.getTopTracks(time);
     },
 
-    getTopTracks() {
-      UserTopItems.fetchTopTracks(this.accessToken, this.defaultTimeRange)
+    getTopTracks(time: string) {
+      UserTopItems.fetchTopTracks(this.accessToken, time)
         .then((res) => {
           this.myTopTracks = res.data.items;
           this.isLoading = false;
