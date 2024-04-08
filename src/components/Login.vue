@@ -22,7 +22,13 @@ export default {
     };
   },
 
-  setup() {},
+  setup() {
+    const store = tokenStore();
+
+    return {
+      store,
+    };
+  },
 
   methods: {
     async spotifyAuth() {
@@ -33,11 +39,9 @@ export default {
       if (!code) {
         redirectToAuthCodeFlow(clientId);
       } else {
-        const accessToken = await getAccessToken(clientId, code);
-        const store = tokenStore();
-        store.setToken(accessToken);
-        this.accessToken = accessToken;
-        const profile = await fetchProfile(accessToken);
+        this.accessToken = await getAccessToken(clientId, code);
+        this.store.setToken(this.accessToken);
+        const profile = await fetchProfile(this.accessToken);
       }
 
       async function redirectToAuthCodeFlow(clientId: string) {
