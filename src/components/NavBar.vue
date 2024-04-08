@@ -1,7 +1,10 @@
 <template>
   <v-layout>
     <v-navigation-drawer v-if="isAuth()">
-      <v-list-item title="My Spotify Wrapped"></v-list-item>
+      <v-list-item
+        prepend-icon="mdi-spotify"
+        title="My Spotify Wrapped"
+      ></v-list-item>
       <v-divider></v-divider>
       <v-list-item link prepend-icon="mdi-home" @click="navigateToHome()"
         >Home</v-list-item
