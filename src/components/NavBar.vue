@@ -68,7 +68,7 @@ export default {
     },
 
     navigateToHome() {
-      router.push("/home");
+      router.push({ name: "Home" });
     },
 
     navigateToArtists() {

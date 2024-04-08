@@ -87,6 +87,7 @@ export default {
       myTopArtists: [] as Artist[],
       myTopTracks: [] as Track[],
       accessToken: "",
+      accessTokenStore: tokenStore(),
       clientId: "f067bf49eb554f97968c1d61611924c8",
       artistHeaders: [
         { title: "Name", value: "name" },
@@ -114,9 +115,13 @@ export default {
   async created() {
     const params = new URLSearchParams(window.location.search);
     const code = params.get("code") || "";
-    this.accessToken = await this.getAccessToken(this.clientId, code);
 
-    this.store.setToken(this.accessToken);
+    if (code !== "") {
+      this.accessToken = await this.getAccessToken(this.clientId, code);
+      this.store.setToken(this.accessToken);
+    } else {
+      this.accessToken = this.accessTokenStore.getToken;
+    }
 
     this.isLoading = true;
 
