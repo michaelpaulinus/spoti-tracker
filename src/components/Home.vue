@@ -75,9 +75,10 @@
 <script lang="ts">
 import type Artist from "@/interfaces/Artist";
 import type Track from "@/interfaces/Track";
-import UserTopItems from "@/services/UserTopItems";
 import { tokenStore } from "@/stores/tokenStore";
 import router from "@/router";
+import getTopArtists from "@/helpers/getTopArtists";
+import getTopTracks from "@/helpers/getTopTracks";
 
 export default {
   data() {
@@ -86,7 +87,7 @@ export default {
       myTopArtists: [] as Artist[],
       myTopTracks: [] as Track[],
       accessToken: "",
-      clientId: "e466a474a3de4973ba5fa2b9e4cd9909",
+      clientId: "f067bf49eb554f97968c1d61611924c8",
       artistHeaders: [
         { title: "Name", value: "name" },
         { title: "Followers", value: "followers.total" },
@@ -114,11 +115,22 @@ export default {
     const params = new URLSearchParams(window.location.search);
     const code = params.get("code") || "";
     this.accessToken = await this.getAccessToken(this.clientId, code);
+
     this.store.setToken(this.accessToken);
 
-    this.getTopArtists();
+    this.isLoading = true;
 
-    this.getTopTracks();
+    this.myTopArtists = await getTopArtists(
+      this.accessToken,
+      this.defaultTimeRange
+    );
+
+    this.myTopTracks = await getTopTracks(
+      this.accessToken,
+      this.defaultTimeRange
+    );
+
+    this.isLoading = false;
   },
 
   mounted() {
@@ -128,32 +140,25 @@ export default {
   },
 
   methods: {
-    changeTimePeriod(time: string) {
+    async changeTimePeriod(time: string) {
       this.defaultTimeRange = time;
       this.isLoading = true;
-      this.getTopArtists();
-      this.getTopTracks();
-    },
-    getTopArtists() {
-      UserTopItems.fetchTopArtists(this.accessToken, this.defaultTimeRange)
-        .then((res) => {
-          this.myTopArtists = res.data.items;
-          this.isLoading = false;
-        })
-        .catch((err) => console.log(err));
+
+      this.myTopArtists = await getTopArtists(
+        this.accessToken,
+        this.defaultTimeRange
+      );
+
+      this.myTopTracks = await getTopTracks(
+        this.accessToken,
+        this.defaultTimeRange
+      );
+
+      this.isLoading = false;
     },
 
     getArtistNames(artists: Artist[]) {
       return artists.map((a) => a.name).join(", ");
-    },
-
-    getTopTracks() {
-      UserTopItems.fetchTopTracks(this.accessToken, this.defaultTimeRange)
-        .then((res) => {
-          this.myTopTracks = res.data.items;
-          this.isLoading = false;
-        })
-        .catch((err) => console.log(err));
     },
 
     async getAccessToken(clientId: string, code: string): Promise<string> {

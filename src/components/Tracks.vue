@@ -55,7 +55,7 @@
 <script lang="ts">
 import type Artist from "@/interfaces/Artist";
 import type Track from "@/interfaces/Track";
-import UserTopItems from "@/services/UserTopItems";
+import getTopTracks from "@/helpers/getTopTracks";
 import { tokenStore } from "@/stores/tokenStore";
 
 export default {
@@ -66,7 +66,6 @@ export default {
       myTopTracks: [] as Track[],
       accessToken: "",
       accessTokenStore: tokenStore(),
-      clientId: "e466a474a3de4973ba5fa2b9e4cd9909",
       artistHeaders: [
         { title: "Name", value: "name" },
         { title: "Followers", value: "followers.total" },
@@ -104,19 +103,11 @@ export default {
   },
 
   methods: {
-    changeTimePeriod(time: string) {
+    async changeTimePeriod(time: string) {
       this.defaultTimeRange = time;
       this.isLoading = true;
-      this.getTopTracks(time);
-    },
-
-    getTopTracks(time: string) {
-      UserTopItems.fetchTopTracks(this.accessToken, time)
-        .then((res) => {
-          this.myTopTracks = res.data.items;
-          this.isLoading = false;
-        })
-        .catch((err) => console.log(err));
+      this.myTopTracks = await getTopTracks(this.accessToken, time);
+      this.isLoading = false;
     },
 
     previewTrack(trackUrl: string | null) {

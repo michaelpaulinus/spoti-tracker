@@ -52,7 +52,7 @@
 
 <script lang="ts">
 import type Artist from "@/interfaces/Artist";
-import UserTopItems from "@/services/UserTopItems";
+import getTopArtists from "@/helpers/getTopArtists";
 import { tokenStore } from "@/stores/tokenStore";
 
 export default {
@@ -62,7 +62,6 @@ export default {
       myTopArtists: [] as Artist[],
       accessToken: "",
       accessTokenStore: tokenStore(),
-      clientId: "e466a474a3de4973ba5fa2b9e4cd9909",
       artistHeaders: [
         { title: "Name", value: "name" },
         { title: "Genres", value: "genres[0]" },
@@ -93,19 +92,11 @@ export default {
   },
 
   methods: {
-    changeTimePeriod(time: string) {
+    async changeTimePeriod(time: string) {
       this.defaultTimeRange = time;
       this.isLoading = true;
-      this.getTopArtists(time);
-    },
-
-    getTopArtists(time: string) {
-      UserTopItems.fetchTopArtists(this.accessToken, time)
-        .then((res) => {
-          this.myTopArtists = res.data.items;
-          this.isLoading = false;
-        })
-        .catch((err) => console.log(err));
+      this.myTopArtists = await getTopArtists(this.accessToken, time);
+      this.isLoading = false;
     },
 
     formatNumbers(num: number) {
