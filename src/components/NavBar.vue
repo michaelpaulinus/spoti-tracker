@@ -4,6 +4,7 @@
       <v-list-item
         prepend-icon="mdi-account-circle"
         :title="userTokenStore.getUser.display_name"
+        lines="two"
       ></v-list-item>
       <v-divider></v-divider>
       <v-tabs v-model="pageTab" slider-color="green" direction="vertical">
