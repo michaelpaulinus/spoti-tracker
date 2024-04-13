@@ -93,7 +93,7 @@ export default {
       accessTokenStore: tokenStore(),
       user: {} as User,
       userTokenStore: userStore(),
-      clientId: "f067bf49eb554f97968c1d61611924c8",
+      clientId: import.meta.env.VITE_CLIENT_ID,
       artistHeaders: [
         { title: "Name", value: "name" },
         { title: "Followers", value: "followers.total" },
@@ -183,7 +183,7 @@ export default {
       params.append("client_id", clientId);
       params.append("grant_type", "authorization_code");
       params.append("code", code);
-      params.append("redirect_uri", "http://localhost:5173/home");
+      params.append("redirect_uri", import.meta.env.VITE_REDIRECT_URI);
       params.append("code_verifier", verifier!);
 
       const result = await fetch("https://accounts.spotify.com/api/token", {
