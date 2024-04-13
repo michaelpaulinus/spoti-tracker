@@ -3,7 +3,7 @@
     <v-navigation-drawer v-if="isAuth()">
       <v-list-item
         prepend-icon="mdi-spotify"
-        title="My Spotify Wrapped"
+        :title="userTokenStore.getUser.display_name"
       ></v-list-item>
       <v-divider></v-divider>
       <v-list-item link prepend-icon="mdi-home" @click="navigateToHome()"
@@ -46,12 +46,14 @@
 import router from "@/router";
 import { RouterLink, RouterView } from "vue-router";
 import { tokenStore } from "@/stores/tokenStore";
+import { userStore } from "@/stores/userStore";
 
 export default {
   data() {
     return {
       tab: "long_term",
       accessTokenStore: tokenStore(),
+      userTokenStore: userStore(),
     };
   },
 
@@ -65,6 +67,7 @@ export default {
     navigateToLogin() {
       router.push("/");
       this.accessTokenStore.clearToken();
+      this.userTokenStore.clearUser();
     },
 
     navigateToHome() {

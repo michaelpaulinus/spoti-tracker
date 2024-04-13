@@ -12,21 +12,27 @@
 </template>
 
 <script lang="ts">
+import fetchProfile from "@/helpers/fetchProfile";
+import type User from "@/interfaces/User";
 import router from "@/router";
 import { tokenStore } from "@/stores/tokenStore";
+import { userStore } from "@/stores/userStore";
 
 export default {
   data() {
     return {
       accessToken: "",
+      user: {} as User,
     };
   },
 
   setup() {
     const store = tokenStore();
+    const uStore = userStore();
 
     return {
       store,
+      uStore,
     };
   },
 
@@ -41,7 +47,8 @@ export default {
       } else {
         this.accessToken = await getAccessToken(clientId, code);
         this.store.setToken(this.accessToken);
-        const profile = await fetchProfile(this.accessToken);
+        this.user = await fetchProfile(this.accessToken);
+        this.uStore.setUser(this.user);
       }
 
       async function redirectToAuthCodeFlow(clientId: string) {
@@ -105,15 +112,6 @@ export default {
         const { access_token } = await result.json();
 
         return access_token;
-      }
-
-      async function fetchProfile(token: string): Promise<any> {
-        const result = await fetch("https://api.spotify.com/v1/me", {
-          method: "GET",
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        return await result.json();
       }
     },
   },

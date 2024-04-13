@@ -76,9 +76,12 @@
 import type Artist from "@/interfaces/Artist";
 import type Track from "@/interfaces/Track";
 import { tokenStore } from "@/stores/tokenStore";
+import { userStore } from "@/stores/userStore";
 import router from "@/router";
+import type User from "@/interfaces/User";
 import getTopArtists from "@/helpers/getTopArtists";
 import getTopTracks from "@/helpers/getTopTracks";
+import fetchProfile from "@/helpers/fetchProfile";
 
 export default {
   data() {
@@ -88,6 +91,8 @@ export default {
       myTopTracks: [] as Track[],
       accessToken: "",
       accessTokenStore: tokenStore(),
+      user: {} as User,
+      userTokenStore: userStore(),
       clientId: "f067bf49eb554f97968c1d61611924c8",
       artistHeaders: [
         { title: "Name", value: "name" },
@@ -106,9 +111,11 @@ export default {
 
   setup() {
     const store = tokenStore();
+    const uStore = userStore();
 
     return {
       store,
+      uStore,
     };
   },
 
@@ -119,8 +126,11 @@ export default {
     if (code !== "") {
       this.accessToken = await this.getAccessToken(this.clientId, code);
       this.store.setToken(this.accessToken);
+      this.user = await fetchProfile(this.accessToken);
+      this.uStore.setUser(this.user);
     } else {
       this.accessToken = this.accessTokenStore.getToken;
+      this.user = this.userTokenStore.getUser;
     }
 
     this.isLoading = true;
