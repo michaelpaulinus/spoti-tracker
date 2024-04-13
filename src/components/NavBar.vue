@@ -6,18 +6,23 @@
         :title="userTokenStore.getUser.display_name"
       ></v-list-item>
       <v-divider></v-divider>
-      <v-list-item link prepend-icon="mdi-home" @click="navigateToHome()"
-        >Home</v-list-item
-      >
-      <v-list-item
-        link
-        prepend-icon="mdi-account-music"
-        @click="navigateToArtists()"
-        >Artists</v-list-item
-      >
-      <v-list-item link prepend-icon="mdi-music" @click="navigateToTracks()"
-        >Tracks</v-list-item
-      >
+      <v-tabs v-model="pageTab" slider-color="green" direction="vertical">
+        <v-tab value="home" prepend-icon="mdi-home" @click="navigateToHome()"
+          >Home</v-tab
+        >
+        <v-tab
+          value="artists"
+          prepend-icon="mdi-account-music"
+          @click="navigateToArtists()"
+          >Artists</v-tab
+        >
+        <v-tab
+          value="tracks"
+          prepend-icon="mdi-music"
+          @click="navigateToTracks()"
+          >Tracks</v-tab
+        >
+      </v-tabs>
 
       <template v-slot:append>
         <div class="pa-2">
@@ -52,6 +57,7 @@ export default {
   data() {
     return {
       tab: "long_term",
+      pageTab: "home",
       accessTokenStore: tokenStore(),
       userTokenStore: userStore(),
     };
@@ -72,14 +78,17 @@ export default {
 
     navigateToHome() {
       router.push({ name: "Home" });
+      this.pageTab = "home";
     },
 
     navigateToArtists() {
       router.push({ name: "Artists", params: { timeRange: this.tab } });
+      this.pageTab = "artists";
     },
 
     navigateToTracks() {
       router.push({ name: "Tracks", params: { timeRange: this.tab } });
+      this.pageTab = "tracks";
     },
 
     changeTimePeriod() {
