@@ -2,7 +2,7 @@
   <v-layout>
     <v-navigation-drawer v-if="isAuth()">
       <v-list-item
-        prepend-icon="mdi-spotify"
+        prepend-icon="mdi-account-circle"
         :title="userTokenStore.getUser.display_name"
       ></v-list-item>
       <v-divider></v-divider>
