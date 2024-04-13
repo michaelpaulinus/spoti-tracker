@@ -35,7 +35,6 @@
 
     <br />
     <br />
-    <br />
 
     <div style="margin: 0 auto">
       <h1>My Top Tracks</h1>
