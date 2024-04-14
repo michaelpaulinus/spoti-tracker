@@ -58,7 +58,7 @@ import { tokenStore } from "@/stores/tokenStore";
 export default {
   data() {
     return {
-      defaultTimeRange: "long_term",
+      defaultTimeRange: "short_term",
       myTopArtists: [] as Artist[],
       accessToken: "",
       accessTokenStore: tokenStore(),

@@ -57,7 +57,7 @@ import { userStore } from "@/stores/userStore";
 export default {
   data() {
     return {
-      tab: "long_term",
+      tab: "short_term",
       pageTab: "home",
       accessTokenStore: tokenStore(),
       userTokenStore: userStore(),
