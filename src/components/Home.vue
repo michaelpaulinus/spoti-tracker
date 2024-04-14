@@ -85,7 +85,7 @@ import fetchProfile from "@/helpers/fetchProfile";
 export default {
   data() {
     return {
-      defaultTimeRange: "long_term",
+      defaultTimeRange: "short_term",
       myTopArtists: [] as Artist[],
       myTopTracks: [] as Track[],
       accessToken: "",
