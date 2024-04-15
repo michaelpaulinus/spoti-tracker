@@ -34,8 +34,11 @@
     </div>
 
     <br />
+    <br />
 
     <div>
+      <h1>My Top 10 Artists</h1>
+      <br />
       <v-data-table-virtual
         :items="myTopArtists"
         :headers="artistHeaders"
