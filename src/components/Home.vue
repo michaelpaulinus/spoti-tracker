@@ -54,6 +54,8 @@
                 :loading="isLoading"
                 :href="item.external_urls.spotify"
                 target="_blank"
+                @mouseover="previewTrack(item.preview_url)"
+                @mouseout="stopTrack()"
               >
                 <v-img :src="item.album.images[0].url"></v-img>
                 <v-card-title style="display: flex; justify-content: center">
@@ -104,6 +106,7 @@ export default {
         { title: "Popularity", value: "popularity" },
       ],
       isLoading: true,
+      currentAudio: null as HTMLAudioElement | null,
     };
   },
 
@@ -172,6 +175,22 @@ export default {
 
     getArtistNames(artists: Artist[]) {
       return artists.map((a) => a.name).join(", ");
+    },
+
+    previewTrack(trackUrl: string | null) {
+      this.stopTrack();
+
+      if (trackUrl !== null) {
+        this.currentAudio = new Audio(trackUrl);
+        this.currentAudio.play();
+      }
+    },
+
+    stopTrack() {
+      if (this.currentAudio) {
+        this.currentAudio.pause();
+        this.currentAudio.currentTime = 0;
+      }
     },
 
     async getAccessToken(clientId: string, code: string): Promise<string> {
