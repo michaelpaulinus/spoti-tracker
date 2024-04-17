@@ -59,6 +59,7 @@
               >
                 <v-img
                   :src="item.album.images[0].url"
+                  cover
                   height="148"
                   width="148"
                 ></v-img>
