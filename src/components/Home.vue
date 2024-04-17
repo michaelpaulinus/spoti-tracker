@@ -21,8 +21,8 @@
               <v-img
                 :src="item.images[1].url"
                 cover
-                height="140"
-                width="220"
+                height="148"
+                width="148"
               ></v-img>
               <v-card-title style="display: flex; justify-content: center">
                 {{ item.name }}
@@ -57,7 +57,11 @@
                 @mouseover="previewTrack(item.preview_url)"
                 @mouseout="stopTrack()"
               >
-                <v-img :src="item.album.images[0].url"></v-img>
+                <v-img
+                  :src="item.album.images[0].url"
+                  height="148"
+                  width="148"
+                ></v-img>
                 <v-card-title style="display: flex; justify-content: center">
                   {{ item.name }}
                 </v-card-title>
