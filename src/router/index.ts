@@ -39,16 +39,14 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
   const store = tokenStore();
 
-  if (to.meta.requiresAuth) {
-    if (store.isAuthenticated) {
-      console.log("authenticated!");
-      next();
-    } else {
-      next("/");
-    }
+  if (
+    to.matched.some((value) => value.meta.requiresAuth) &&
+    !store.isAuthenticated
+  ) {
+    next("/");
   } else {
     next();
   }
