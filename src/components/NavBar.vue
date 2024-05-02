@@ -14,7 +14,10 @@ export default {
     };
   },
 
-  created() {},
+  created() {
+    this.tab = sessionStorage.getItem("tab") || "";
+    this.pageTab = sessionStorage.getItem("pageTab") || "";
+  },
 
   methods: {
     isAuth() {
@@ -30,20 +33,24 @@ export default {
     navigateToHome() {
       router.push({ name: "Home" });
       this.pageTab = "home";
+      sessionStorage.setItem("pageTab", this.pageTab);
     },
 
     navigateToArtists() {
       router.push({ name: "Artists", params: { timeRange: this.tab } });
       this.pageTab = "artists";
+      sessionStorage.setItem("pageTab", this.pageTab);
     },
 
     navigateToTracks() {
       router.push({ name: "Tracks", params: { timeRange: this.tab } });
       this.pageTab = "tracks";
+      sessionStorage.setItem("pageTab", this.pageTab);
     },
 
     changeTimePeriod() {
       (this as any).$emitter.emit("new_time_range", this.tab);
+      sessionStorage.setItem("tab", this.tab);
     },
   },
 };
