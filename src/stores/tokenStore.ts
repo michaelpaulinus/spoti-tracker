@@ -5,7 +5,7 @@ type State = {
   isAuthenticated: boolean;
 };
 
-export const tokenStore = defineStore("tokenStore", {
+const tokenStore = defineStore("tokenStore", {
   state: (): State => ({
     token: "",
     isAuthenticated: false,
@@ -26,3 +26,5 @@ export const tokenStore = defineStore("tokenStore", {
     },
   },
 });
+
+export default tokenStore;

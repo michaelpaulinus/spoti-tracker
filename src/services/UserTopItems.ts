@@ -1,5 +1,5 @@
-import type { TopArtistsResponse } from "@/interfaces/TopArtists";
-import type { TopTracksResponse } from "@/interfaces/TopTracks";
+import type TopArtistsResponse from "@/interfaces/TopArtists";
+import type TopTracksResponse from "@/interfaces/TopTracks";
 import axios, { AxiosError } from "axios";
 import axiosRetry from "axios-retry";
 import toast from "@/common/toast";

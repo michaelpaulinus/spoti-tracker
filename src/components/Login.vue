@@ -15,8 +15,8 @@
 import fetchProfile from "@/helpers/fetchProfile";
 import type User from "@/interfaces/User";
 import router from "@/router";
-import { tokenStore } from "@/stores/tokenStore";
-import { userStore } from "@/stores/userStore";
+import tokenStore from "@/stores/tokenStore";
+import userStore from "@/stores/userStore";
 
 export default {
   data() {

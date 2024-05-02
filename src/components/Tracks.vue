@@ -64,7 +64,7 @@
 import type Artist from "@/interfaces/Artist";
 import type Track from "@/interfaces/Track";
 import getTopTracks from "@/helpers/getTopTracks";
-import { tokenStore } from "@/stores/tokenStore";
+import tokenStore from "@/stores/tokenStore";
 
 export default {
   data() {

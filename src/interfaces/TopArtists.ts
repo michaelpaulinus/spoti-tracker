@@ -1,6 +1,6 @@
 import type Artist from "@/interfaces/Artist";
 
-export interface TopArtistsResponse {
+export default interface TopArtistsResponse {
   href: string;
   limit: number;
   next: string | null;

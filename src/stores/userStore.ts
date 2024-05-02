@@ -5,7 +5,7 @@ type State = {
   user: User;
 };
 
-export const userStore = defineStore("userStore", {
+const userStore = defineStore("userStore", {
   state: (): State => ({
     user: {
       country: "string",
@@ -50,3 +50,5 @@ export const userStore = defineStore("userStore", {
     },
   },
 });
+
+export default userStore;

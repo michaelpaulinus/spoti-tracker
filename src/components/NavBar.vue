@@ -51,8 +51,8 @@
 <script lang="ts">
 import router from "@/router";
 import { RouterLink, RouterView } from "vue-router";
-import { tokenStore } from "@/stores/tokenStore";
-import { userStore } from "@/stores/userStore";
+import tokenStore from "@/stores/tokenStore";
+import userStore from "@/stores/userStore";
 
 export default {
   data() {

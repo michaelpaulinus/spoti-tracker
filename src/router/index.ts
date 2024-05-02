@@ -3,7 +3,7 @@ import Login from "@/components/Login.vue";
 import Home from "@/components/Home.vue";
 import Artists from "@/components/Artists.vue";
 import Tracks from "@/components/Tracks.vue";
-import { tokenStore } from "@/stores/tokenStore";
+import tokenStore from "@/stores/tokenStore";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

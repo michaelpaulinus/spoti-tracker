@@ -81,8 +81,8 @@
 <script lang="ts">
 import type Artist from "@/interfaces/Artist";
 import type Track from "@/interfaces/Track";
-import { tokenStore } from "@/stores/tokenStore";
-import { userStore } from "@/stores/userStore";
+import tokenStore from "@/stores/tokenStore";
+import userStore from "@/stores/userStore";
 import type User from "@/interfaces/User";
 import getTopArtists from "@/helpers/getTopArtists";
 import getTopTracks from "@/helpers/getTopTracks";

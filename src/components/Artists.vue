@@ -56,7 +56,7 @@
 <script lang="ts">
 import type Artist from "@/interfaces/Artist";
 import getTopArtists from "@/helpers/getTopArtists";
-import { tokenStore } from "@/stores/tokenStore";
+import tokenStore from "@/stores/tokenStore";
 
 export default {
   data() {
