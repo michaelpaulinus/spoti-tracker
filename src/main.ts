@@ -10,6 +10,7 @@ import * as directives from "vuetify/directives";
 import mitt from "mitt";
 import Toast, { type PluginOptions } from "vue-toastification";
 import "vue-toastification/dist/index.css";
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 
 const vuetify = createVuetify({
   theme: {
@@ -20,12 +21,9 @@ const vuetify = createVuetify({
 });
 
 const emitter = mitt();
+const pinia = createPinia().use(piniaPluginPersistedstate);
 
-const app = createApp(App)
-  .use(vuetify)
-  .use(createPinia())
-  .use(router)
-  .use(Toast);
+const app = createApp(App).use(vuetify).use(pinia).use(router).use(Toast);
 
 app.config.globalProperties.$emitter = emitter;
 

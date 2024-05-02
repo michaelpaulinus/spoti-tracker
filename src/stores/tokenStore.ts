@@ -6,6 +6,7 @@ type State = {
 };
 
 const tokenStore = defineStore("tokenStore", {
+  persist: true,
   state: (): State => ({
     token: "",
     isAuthenticated: false,

@@ -6,6 +6,7 @@ type State = {
 };
 
 const userStore = defineStore("userStore", {
+  persist: true,
   state: (): State => ({
     user: {
       country: "string",

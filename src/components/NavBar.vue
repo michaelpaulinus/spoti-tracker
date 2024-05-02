@@ -22,9 +22,9 @@ export default {
     },
 
     navigateToLogin() {
-      router.push("/");
       this.accessTokenStore.clearToken();
       this.userTokenStore.clearUser();
+      router.push("/");
     },
 
     navigateToHome() {
