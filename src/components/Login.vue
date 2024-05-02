@@ -13,6 +13,7 @@ export default {
   },
 
   setup() {
+    sessionStorage.clear();
     const store = tokenStore();
     store.clearToken();
     const uStore = userStore();
