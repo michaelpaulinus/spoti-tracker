@@ -21,5 +21,3 @@ npm run dev
 ```sh
 npm run build
 ```
-
-# my-spotify-wrapped
