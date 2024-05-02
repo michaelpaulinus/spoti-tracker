@@ -7,6 +7,7 @@ import type User from "@/interfaces/User";
 import getTopArtists from "@/helpers/getTopArtists";
 import getTopTracks from "@/helpers/getTopTracks";
 import fetchProfile from "@/helpers/fetchProfile";
+import router from "@/router";
 
 export default {
   data() {
@@ -54,6 +55,7 @@ export default {
       this.store.setToken(this.accessToken);
       this.user = await fetchProfile(this.accessToken);
       this.uStore.setUser(this.user);
+      router.push("/home");
     } else {
       this.accessToken = this.accessTokenStore.getToken;
       this.user = this.userTokenStore.getUser;
