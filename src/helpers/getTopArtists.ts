@@ -9,7 +9,6 @@ export default async function getTopArtists(
     const res = await UserTopItems.fetchTopArtists(accessToken, time);
     return res.data.items;
   } catch (err) {
-    console.log(err);
     throw err;
   }
 }

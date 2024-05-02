@@ -9,7 +9,6 @@ export default async function getTopTracks(
     const res = await UserTopItems.fetchTopTracks(accessToken, time);
     return res.data.items;
   } catch (err) {
-    console.log(err);
     throw err;
   }
 }
