@@ -1,16 +1,3 @@
-<template>
-  <div style="display: flex; justify-content: center; align-items: center">
-    <v-btn
-      rounded
-      append-icon="mdi-spotify"
-      color="green"
-      size="large"
-      @click="spotifyAuth()"
-      >Login</v-btn
-    >
-  </div>
-</template>
-
 <script lang="ts">
 import fetchProfile from "@/helpers/fetchProfile";
 import type User from "@/interfaces/User";
@@ -117,3 +104,16 @@ export default {
   },
 };
 </script>
+
+<template>
+  <div style="display: flex; justify-content: center; align-items: center">
+    <v-btn
+      rounded
+      append-icon="mdi-spotify"
+      color="green"
+      size="large"
+      @click="spotifyAuth()"
+      >Login</v-btn
+    >
+  </div>
+</template>

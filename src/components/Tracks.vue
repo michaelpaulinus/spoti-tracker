@@ -1,65 +1,3 @@
-<template>
-  <div style="margin: 0 auto">
-    <h1>My Top Tracks</h1>
-    <br />
-    <div>
-      <v-row style="display: flex; justify-content: space-between">
-        <v-col
-          cols="2"
-          v-for="(item, index) in myTopTracks.slice(0, 5)"
-          style="display: flex; justify-content: center"
-        >
-          <v-slide-x-transition>
-            <v-card
-              width="240"
-              rounded
-              elevation="12"
-              :loading="isLoading"
-              target="_blank"
-              :href="item.external_urls.spotify"
-              @mouseover="previewTrack(item.preview_url)"
-              @mouseout="stopTrack()"
-            >
-              <v-img
-                :src="item.album.images[0].url"
-                cover
-                height="148"
-                width="148"
-              ></v-img>
-              <v-card-title style="display: flex; justify-content: center">
-                {{ item.name }}
-              </v-card-title>
-              <v-card-subtitle style="display: flex; justify-content: center">
-                {{ getArtistNames(item.artists) }}</v-card-subtitle
-              >
-            </v-card>
-          </v-slide-x-transition>
-        </v-col>
-      </v-row>
-    </div>
-
-    <br />
-    <br />
-
-    <div>
-      <h1>My Top 10 Tracks</h1>
-      <br />
-      <v-data-table-virtual
-        :items="myTopTracks"
-        :headers="trackHeaders"
-        fixed-header
-        :loading="isLoading"
-      >
-        <template v-slot:item.artists="{ item }">
-          <td>
-            {{ getArtistNames(item.artists) }}
-          </td>
-        </template>
-      </v-data-table-virtual>
-    </div>
-  </div>
-</template>
-
 <script lang="ts">
 import type Artist from "@/interfaces/Artist";
 import type Track from "@/interfaces/Track";
@@ -140,6 +78,68 @@ export default {
   },
 };
 </script>
+
+<template>
+  <div style="margin: 0 auto">
+    <h1>My Top Tracks</h1>
+    <br />
+    <div>
+      <v-row style="display: flex; justify-content: space-between">
+        <v-col
+          cols="2"
+          v-for="(item, index) in myTopTracks.slice(0, 5)"
+          style="display: flex; justify-content: center"
+        >
+          <v-slide-x-transition>
+            <v-card
+              width="240"
+              rounded
+              elevation="12"
+              :loading="isLoading"
+              target="_blank"
+              :href="item.external_urls.spotify"
+              @mouseover="previewTrack(item.preview_url)"
+              @mouseout="stopTrack()"
+            >
+              <v-img
+                :src="item.album.images[0].url"
+                cover
+                height="148"
+                width="148"
+              ></v-img>
+              <v-card-title style="display: flex; justify-content: center">
+                {{ item.name }}
+              </v-card-title>
+              <v-card-subtitle style="display: flex; justify-content: center">
+                {{ getArtistNames(item.artists) }}</v-card-subtitle
+              >
+            </v-card>
+          </v-slide-x-transition>
+        </v-col>
+      </v-row>
+    </div>
+
+    <br />
+    <br />
+
+    <div>
+      <h1>My Top 10 Tracks</h1>
+      <br />
+      <v-data-table-virtual
+        :items="myTopTracks"
+        :headers="trackHeaders"
+        fixed-header
+        :loading="isLoading"
+      >
+        <template v-slot:item.artists="{ item }">
+          <td>
+            {{ getArtistNames(item.artists) }}
+          </td>
+        </template>
+      </v-data-table-virtual>
+    </div>
+  </div>
+</template>
 
 <style>
 tbody tr:nth-of-type(even) {
