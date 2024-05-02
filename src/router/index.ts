@@ -3,6 +3,7 @@ import Login from "@/components/Login.vue";
 import Home from "@/components/Home.vue";
 import Artists from "@/components/Artists.vue";
 import Tracks from "@/components/Tracks.vue";
+import { tokenStore } from "@/stores/tokenStore";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,20 +17,43 @@ const router = createRouter({
       path: "/home",
       name: "Home",
       component: Home,
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: "/artists/:timeRange",
       name: "Artists",
       component: Artists,
       props: true,
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: "/tracks/:timeRange",
       name: "Tracks",
       component: Tracks,
       props: true,
+      meta: {
+        requiresAuth: true,
+      },
     },
   ],
+});
+
+router.beforeEach((to, from, next) => {
+  const store = tokenStore();
+
+  if (to.meta.requiresAuth) {
+    if (store.isAuthenticated) {
+      next();
+    } else {
+      next("/");
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;
