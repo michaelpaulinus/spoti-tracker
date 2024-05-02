@@ -17,9 +17,6 @@ const router = createRouter({
       path: "/home",
       name: "Home",
       component: Home,
-      meta: {
-        requiresAuth: true,
-      },
     },
     {
       path: "/artists/:timeRange",
@@ -47,6 +44,7 @@ router.beforeEach((to, from, next) => {
 
   if (to.meta.requiresAuth) {
     if (store.isAuthenticated) {
+      console.log("authenticated!");
       next();
     } else {
       next("/");
