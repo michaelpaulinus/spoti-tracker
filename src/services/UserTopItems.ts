@@ -34,10 +34,15 @@ axios.interceptors.response.use(
     let errorMessage: string;
 
     switch (error.response?.status) {
+      case 400:
+        router.push("/");
+        errorMessage =
+          "Bad Request: The server could not understand the request due to invalid syntax or missing parameters. Please sign-in again";
+        break;
       case 401:
         router.push("/");
         errorMessage =
-          "Unauthorized: The request requires user authentication.";
+          "Unauthorized: The request requires user authentication. Please sign-in again";
         break;
       case 403:
         errorMessage =
@@ -56,7 +61,8 @@ axios.interceptors.response.use(
           "Service Unavailable: The server is currently unable to handle the request due to temporary overloading or maintenance of the server.";
         break;
       case 504:
-        errorMessage = `Gateway timeout.`;
+        errorMessage =
+          "Gateway Timeout: The server, while acting as a gateway or proxy, did not receive a timely response from the upstream server it accessed in attempting to complete the request.";
         break;
       default:
         errorMessage = "An error occurred. Please try again later.";
