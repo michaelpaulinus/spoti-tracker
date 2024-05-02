@@ -34,7 +34,7 @@ export const userStore = defineStore("userStore", {
       product: "string",
       type: "string",
       uri: "string",
-    },
+    } as User,
   }),
   actions: {
     setUser(user: User) {
