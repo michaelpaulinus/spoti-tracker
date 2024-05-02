@@ -12,6 +12,9 @@ import * as directives from "vuetify/directives";
 
 import mitt from "mitt";
 
+import Toast, { type PluginOptions } from "vue-toastification";
+import "vue-toastification/dist/index.css";
+
 const vuetify = createVuetify({
   theme: {
     defaultTheme: "dark",
@@ -22,7 +25,11 @@ const vuetify = createVuetify({
 
 const emitter = mitt();
 
-const app = createApp(App).use(vuetify).use(createPinia()).use(router);
+const app = createApp(App)
+  .use(vuetify)
+  .use(createPinia())
+  .use(router)
+  .use(Toast);
 
 app.config.globalProperties.$emitter = emitter;
 
