@@ -14,7 +14,9 @@ export default {
 
   setup() {
     const store = tokenStore();
+    store.clearToken();
     const uStore = userStore();
+    uStore.clearUser();
 
     return {
       store,
