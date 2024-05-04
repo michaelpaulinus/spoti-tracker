@@ -6,7 +6,7 @@ import userStore from "@/stores/userStore";
 import type User from "@/interfaces/User";
 import getTopArtists from "@/helpers/getTopArtists";
 import getTopTracks from "@/helpers/getTopTracks";
-import fetchProfile from "@/helpers/fetchProfile";
+import getUserProfile from "@/helpers/getUserProfile";
 import router from "@/router";
 
 export default {
@@ -53,7 +53,7 @@ export default {
     if (code !== "") {
       this.accessToken = await this.getAccessToken(this.clientId, code);
       this.store.setToken(this.accessToken);
-      this.user = await fetchProfile(this.accessToken);
+      this.user = await getUserProfile(this.accessToken);
       this.uStore.setUser(this.user);
       router.push("/home");
     } else {

@@ -1,5 +1,5 @@
 <script lang="ts">
-import fetchProfile from "@/helpers/fetchProfile";
+import getUserProfile from "@/helpers/getUserProfile";
 import type User from "@/interfaces/User";
 import tokenStore from "@/stores/tokenStore";
 import userStore from "@/stores/userStore";
@@ -36,7 +36,7 @@ export default {
       } else {
         this.accessToken = await getAccessToken(clientId, code);
         this.store.setToken(this.accessToken);
-        this.user = await fetchProfile(this.accessToken);
+        this.user = await getUserProfile(this.accessToken);
         this.uStore.setUser(this.user);
       }
 

@@ -1,3 +1,4 @@
+import type User from "@/interfaces/User";
 import type TopArtistsResponse from "@/interfaces/TopArtists";
 import type TopTracksResponse from "@/interfaces/TopTracks";
 import type Recommendations from "@/interfaces/Recommendations";
@@ -8,6 +9,12 @@ import getTopArtists from "@/helpers/getTopArtists";
 const limit = 10;
 
 class UserTopItems {
+  async fetchProfile(token: string) {
+    return await httpClient.get<User>(`me`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  }
+
   async fetchTopArtists(token: string, time_range: string) {
     return await httpClient.get<TopArtistsResponse>(
       `me/top/artists?time_range=${time_range}&limit=${limit}`,
