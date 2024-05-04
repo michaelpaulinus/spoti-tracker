@@ -1,84 +1,16 @@
 import type TopArtistsResponse from "@/interfaces/TopArtists";
 import type TopTracksResponse from "@/interfaces/TopTracks";
-import axios, { AxiosError } from "axios";
-import axiosRetry from "axios-retry";
-import toast from "@/common/toast";
-import router from "@/router";
-
-axiosRetry(axios, {
-  retries: 3,
-  retryDelay: (retryCount) => {
-    return retryCount * 2000;
-  },
-  onRetry: (retryCount, error, requestConfig) => {
-    toast.warning(
-      `Gateway timeout. Re-attempting in ${retryCount * 2} seconds`
-    );
-  },
-});
-
-axios.interceptors.request.use(
-  (config) => {
-    return config;
-  },
-  (error: AxiosError) => {
-    toast.error(error.message);
-  }
-);
-
-axios.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  async (error: AxiosError) => {
-    let errorMessage: string;
-
-    switch (error.response?.status) {
-      case 400:
-        router.push("/");
-        errorMessage =
-          "Bad Request: The server could not understand the request due to invalid syntax or missing parameters. Please sign-in again";
-        break;
-      case 401:
-        router.push("/");
-        errorMessage =
-          "Unauthorized: The request requires user authentication. Please sign-in again";
-        break;
-      case 403:
-        errorMessage =
-          "Forbidden: The server understood the request but refuses to authorize it.";
-        break;
-      case 404:
-        errorMessage =
-          "Not Found: The requested resource could not be found on the server.";
-        break;
-      case 500:
-        errorMessage =
-          "Internal Server Error: The server encountered an unexpected condition that prevented it from fulfilling the request.";
-        break;
-      case 503:
-        errorMessage =
-          "Service Unavailable: The server is currently unable to handle the request due to temporary overloading or maintenance of the server.";
-        break;
-      case 504:
-        errorMessage =
-          "Gateway Timeout: The server, while acting as a gateway or proxy, did not receive a timely response from the upstream server it accessed in attempting to complete the request.";
-        break;
-      default:
-        errorMessage = "An error occurred. Please try again later.";
-        break;
-    }
-
-    toast.error(errorMessage);
-  }
-);
+import type Recommendations from "@/interfaces/Recommendations";
+import httpClient from "@/services/BaseHttpClient";
+import getTopTracks from "@/helpers/getTopTracks";
+import getTopArtists from "@/helpers/getTopArtists";
 
 const limit = 10;
 
 class UserTopItems {
   async fetchTopArtists(token: string, time_range: string) {
-    return await axios.get<TopArtistsResponse>(
-      `https://api.spotify.com/v1/me/top/artists?time_range=${time_range}&limit=${limit}`,
+    return await httpClient.get<TopArtistsResponse>(
+      `me/top/artists?time_range=${time_range}&limit=${limit}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -88,8 +20,28 @@ class UserTopItems {
   }
 
   async fetchTopTracks(token: string, time_range: string) {
-    return await axios.get<TopTracksResponse>(
-      `https://api.spotify.com/v1/me/top/tracks?time_range=${time_range}&limit=${limit}`,
+    return await httpClient.get<TopTracksResponse>(
+      `me/top/tracks?time_range=${time_range}&limit=${limit}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  }
+
+  async fetchRecommendations(token: string, time_range: string) {
+    const topTracks = await getTopTracks(token, time_range);
+    const topTracksIds = topTracks.map((track) => track.id);
+    const topArtists = await getTopArtists(token, time_range);
+    const topArtistsIds = topArtists.map((artist) => artist.id);
+
+    return await httpClient.get<Recommendations>(
+      `recommendations?seed_tracks=${topTracksIds
+        .slice(0, 2)
+        .join(",")}&seed_artists=${topArtistsIds
+        .slice(0, 3)
+        .join(",")}&limit=${limit}&target_popularity=90`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

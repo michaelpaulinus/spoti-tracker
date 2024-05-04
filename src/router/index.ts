@@ -3,6 +3,7 @@ import Login from "@/components/Login.vue";
 import Home from "@/components/Home.vue";
 import Artists from "@/components/Artists.vue";
 import Tracks from "@/components/Tracks.vue";
+import Recommendations from "@/components/Recommendations.vue";
 import tokenStore from "@/stores/tokenStore";
 
 const router = createRouter({
@@ -31,6 +32,15 @@ const router = createRouter({
       path: "/tracks/:timeRange",
       name: "Tracks",
       component: Tracks,
+      props: true,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: "/recommendations/:timeRange",
+      name: "Recommendations",
+      component: Recommendations,
       props: true,
       meta: {
         requiresAuth: true,

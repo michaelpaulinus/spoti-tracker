@@ -48,6 +48,12 @@ export default {
       sessionStorage.setItem("pageTab", this.pageTab);
     },
 
+    navigateToRecommendations() {
+      router.push({ name: "Recommendations", params: { timeRange: this.tab } });
+      this.pageTab = "recommendations";
+      sessionStorage.setItem("pageTab", this.pageTab);
+    },
+
     changeTimePeriod() {
       (this as any).$emitter.emit("new_time_range", this.tab);
       sessionStorage.setItem("tab", this.tab);
@@ -80,6 +86,12 @@ export default {
           prepend-icon="mdi-music"
           @click="navigateToTracks()"
           >Tracks</v-tab
+        >
+        <v-tab
+          value="recommendations"
+          prepend-icon="mdi-new-box"
+          @click="navigateToRecommendations()"
+          >Recommendations</v-tab
         >
       </v-tabs>
 
