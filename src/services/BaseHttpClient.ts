@@ -41,12 +41,12 @@ httpClient.interceptors.response.use(
       case 400:
         router.push("/");
         errorMessage =
-          "Bad Request: The request was invalid. Please sign-in again";
+          "Bad Request: The request was invalid. Please sign-in again.";
         break;
       case 401:
         router.push("/");
         errorMessage =
-          "Unauthorized: The request requires user authentication. Please sign-in again";
+          "Unauthorized: The request requires user authentication. Please sign-in again.";
         break;
       case 403:
         errorMessage =
