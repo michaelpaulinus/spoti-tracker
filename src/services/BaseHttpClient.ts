@@ -41,7 +41,7 @@ httpClient.interceptors.response.use(
       case 400:
         router.push("/");
         errorMessage =
-          "Bad Request: The server could not understand the request due to invalid syntax or missing parameters. Please sign-in again";
+          "Bad Request: The request was invalid. Please sign-in again";
         break;
       case 401:
         router.push("/");
