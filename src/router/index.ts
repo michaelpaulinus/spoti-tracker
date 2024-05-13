@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Login from "@/components/Login.vue";
-import Home from "@/components/Home.vue";
-import Artists from "@/components/Artists.vue";
-import Tracks from "@/components/Tracks.vue";
-import Recommendations from "@/components/Recommendations.vue";
+import Login from "@/views/Login.vue";
+import Home from "@/views/Home.vue";
+import Artists from "@/views/Artists.vue";
+import Tracks from "@/views/Tracks.vue";
+import Recommendations from "@/views/Recommendations.vue";
 import tokenStore from "@/stores/tokenStore";
 
 const router = createRouter({
