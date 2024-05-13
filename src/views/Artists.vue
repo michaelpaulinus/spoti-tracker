@@ -1,5 +1,5 @@
 <script lang="ts">
-import type Artist from "@/interfaces/Artist";
+import type Artist from "@/models/Artist";
 import getTopArtists from "@/helpers/getTopArtists";
 import tokenStore from "@/stores/tokenStore";
 

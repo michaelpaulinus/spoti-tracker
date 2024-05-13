@@ -1,5 +1,5 @@
 import UserTopItems from "@/services/UserTopItems";
-import type Artist from "@/interfaces/Artist";
+import type Artist from "@/models/Artist";
 
 export default async function getTopArtists(
   accessToken: string,

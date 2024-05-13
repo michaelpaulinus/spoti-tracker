@@ -1,5 +1,5 @@
 import UserTopItems from "@/services/UserTopItems";
-import type User from "@/interfaces/User";
+import type User from "@/models/User";
 
 export default async function getUserProfile(token: string): Promise<User> {
   try {

@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type User from "@/interfaces/User";
+import type User from "@/models/User";
 
 type State = {
   user: User;

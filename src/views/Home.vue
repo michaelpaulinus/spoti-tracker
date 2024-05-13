@@ -1,9 +1,9 @@
 <script lang="ts">
-import type Artist from "@/interfaces/Artist";
-import type Track from "@/interfaces/Track";
+import type Artist from "@/models/Artist";
+import type Track from "@/models/Track";
 import tokenStore from "@/stores/tokenStore";
 import userStore from "@/stores/userStore";
-import type User from "@/interfaces/User";
+import type User from "@/models/User";
 import getTopArtists from "@/helpers/getTopArtists";
 import getTopTracks from "@/helpers/getTopTracks";
 import getUserProfile from "@/helpers/getUserProfile";

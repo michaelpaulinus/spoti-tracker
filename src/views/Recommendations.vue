@@ -1,6 +1,6 @@
 <script lang="ts">
-import type Artist from "@/interfaces/Artist";
-import type Track from "@/interfaces/Track";
+import type Artist from "@/models/Artist";
+import type Track from "@/models/Track";
 import getRecommendations from "@/helpers/getRecommendations";
 import tokenStore from "@/stores/tokenStore";
 

@@ -1,4 +1,4 @@
-import type Track from "@/interfaces/Track";
+import type Track from "@/models/Track";
 
 export default interface TopTracksResponse {
   href: string;

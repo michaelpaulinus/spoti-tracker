@@ -1,7 +1,7 @@
-import type User from "@/interfaces/User";
-import type TopArtistsResponse from "@/interfaces/TopArtists";
-import type TopTracksResponse from "@/interfaces/TopTracks";
-import type Recommendations from "@/interfaces/Recommendations";
+import type User from "@/models/User";
+import type TopArtistsResponse from "@/models/TopArtists";
+import type TopTracksResponse from "@/models/TopTracks";
+import type Recommendations from "@/models/Recommendations";
 import httpClient from "@/services/BaseHttpClient";
 import getTopTracks from "@/helpers/getTopTracks";
 import getTopArtists from "@/helpers/getTopArtists";

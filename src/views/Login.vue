@@ -1,6 +1,6 @@
 <script lang="ts">
 import getUserProfile from "@/helpers/getUserProfile";
-import type User from "@/interfaces/User";
+import type User from "@/models/User";
 import tokenStore from "@/stores/tokenStore";
 import userStore from "@/stores/userStore";
 
