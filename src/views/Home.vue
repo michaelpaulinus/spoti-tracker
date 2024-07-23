@@ -165,4 +165,14 @@ export default {
   flex-direction: row;
   gap: 1rem;
 }
+
+@media only screen and (max-width: 600px) {
+  .artist-and-track-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+  }
+}
 </style>

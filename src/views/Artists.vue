@@ -109,4 +109,14 @@ tbody tr:nth-of-type(even) {
   flex-direction: row;
   gap: 1rem;
 }
+
+@media only screen and (max-width: 600px) {
+  .artist-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+  }
+}
 </style>
