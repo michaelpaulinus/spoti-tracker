@@ -2,8 +2,20 @@
 import type Artist from "@/models/Artist";
 import getTopArtists from "@/helpers/getTopArtists";
 import tokenStore from "@/stores/tokenStore";
+import ArtistCard from "@/components/ArtistCard.vue";
 
 export default {
+  components: {
+    ArtistCard,
+  },
+
+  props: {
+    timeRange: {
+      type: String,
+      required: true,
+    },
+  },
+
   data() {
     return {
       defaultTimeRange: "short_term",
@@ -20,25 +32,6 @@ export default {
     };
   },
 
-  created() {
-    this.accessToken = this.accessTokenStore.getToken;
-  },
-  props: {
-    timeRange: {
-      type: String,
-      required: true,
-    },
-  },
-
-  mounted() {
-    if (this.timeRange) {
-      this.changeTimePeriod(this.timeRange);
-    }
-    (this as any).$emitter.on("new_time_range", (timeRange: string) =>
-      this.changeTimePeriod(timeRange)
-    );
-  },
-
   methods: {
     async changeTimePeriod(time: string) {
       this.defaultTimeRange = time;
@@ -51,42 +44,34 @@ export default {
       return num.toLocaleString("en-US");
     },
   },
+
+  created() {
+    this.accessToken = this.accessTokenStore.getToken;
+  },
+
+  mounted() {
+    if (this.timeRange) {
+      this.changeTimePeriod(this.timeRange);
+    }
+    (this as any).$emitter.on("new_time_range", (timeRange: string) =>
+      this.changeTimePeriod(timeRange)
+    );
+  },
 };
 </script>
 
 <template>
-  <div style="margin: 0 auto">
-    <h1>My Top Artists</h1>
-    <br />
+  <div class="container">
     <div>
-      <v-row style="display: flex; justify-content: space-between">
-        <v-col
-          cols="2"
-          v-for="(item, index) in myTopArtists.slice(0, 5)"
-          style="display: flex; justify-content: center"
-        >
-          <v-slide-x-transition>
-            <v-card
-              width="240"
-              rounded
-              elevation="12"
-              :loading="isLoading"
-              :href="item.external_urls.spotify"
-              target="_blank"
-            >
-              <v-img
-                :src="item.images[1].url"
-                cover
-                height="148"
-                width="148"
-              ></v-img>
-              <v-card-title style="display: flex; justify-content: center">
-                {{ item.name }}
-              </v-card-title>
-            </v-card>
-          </v-slide-x-transition>
-        </v-col>
-      </v-row>
+      <h1>My Top Artists</h1>
+      <br />
+      <div class="artist-container">
+        <ArtistCard
+          v-for="artist in myTopArtists.slice(0, 5)"
+          :artist="artist"
+          :is-loading="isLoading"
+        />
+      </div>
     </div>
 
     <br />
@@ -109,8 +94,19 @@ export default {
   </div>
 </template>
 
-<style>
+<style scoped>
 tbody tr:nth-of-type(even) {
   background-color: #373535;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.artist-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
 }
 </style>

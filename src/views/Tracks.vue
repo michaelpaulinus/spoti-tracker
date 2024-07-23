@@ -3,12 +3,23 @@ import type Artist from "@/models/Artist";
 import type Track from "@/models/Track";
 import getTopTracks from "@/helpers/getTopTracks";
 import tokenStore from "@/stores/tokenStore";
+import TrackCard from "@/components/TrackCard.vue";
 
 export default {
+  components: {
+    TrackCard,
+  },
+
+  props: {
+    timeRange: {
+      type: String,
+      required: true,
+    },
+  },
+
   data() {
     return {
       defaultTimeRange: "short_term",
-      myTopArtists: [] as Artist[],
       myTopTracks: [] as Track[],
       accessToken: "",
       accessTokenStore: tokenStore(),
@@ -24,28 +35,7 @@ export default {
         { title: "Popularity", value: "popularity" },
       ],
       isLoading: true,
-      currentAudio: null as HTMLAudioElement | null,
     };
-  },
-
-  created() {
-    this.accessToken = this.accessTokenStore.getToken;
-  },
-
-  props: {
-    timeRange: {
-      type: String,
-      required: true,
-    },
-  },
-
-  mounted() {
-    if (this.timeRange) {
-      this.changeTimePeriod(this.timeRange);
-    }
-    (this as any).$emitter.on("new_time_range", (timeRange: string) =>
-      this.changeTimePeriod(timeRange)
-    );
   },
 
   methods: {
@@ -56,67 +46,38 @@ export default {
       this.isLoading = false;
     },
 
-    previewTrack(trackUrl: string | null) {
-      this.stopTrack();
-
-      if (trackUrl !== null) {
-        this.currentAudio = new Audio(trackUrl);
-        this.currentAudio.play();
-      }
-    },
-
-    stopTrack() {
-      if (this.currentAudio) {
-        this.currentAudio.pause();
-        this.currentAudio.currentTime = 0;
-      }
-    },
-
     getArtistNames(artists: Artist[]) {
       return artists.map((a) => a.name).join(", ");
     },
+  },
+
+  created() {
+    this.accessToken = this.accessTokenStore.getToken;
+  },
+
+  mounted() {
+    if (this.timeRange) {
+      this.changeTimePeriod(this.timeRange);
+    }
+    (this as any).$emitter.on("new_time_range", (timeRange: string) =>
+      this.changeTimePeriod(timeRange)
+    );
   },
 };
 </script>
 
 <template>
-  <div style="margin: 0 auto">
-    <h1>My Top Tracks</h1>
-    <br />
+  <div class="container">
     <div>
-      <v-row style="display: flex; justify-content: space-between">
-        <v-col
-          cols="2"
-          v-for="(item, index) in myTopTracks.slice(0, 5)"
-          style="display: flex; justify-content: center"
-        >
-          <v-slide-x-transition>
-            <v-card
-              width="240"
-              rounded
-              elevation="12"
-              :loading="isLoading"
-              target="_blank"
-              :href="item.external_urls.spotify"
-              @mouseover="previewTrack(item.preview_url)"
-              @mouseout="stopTrack()"
-            >
-              <v-img
-                :src="item.album.images[0].url"
-                cover
-                height="148"
-                width="148"
-              ></v-img>
-              <v-card-title style="display: flex; justify-content: center">
-                {{ item.name }}
-              </v-card-title>
-              <v-card-subtitle style="display: flex; justify-content: center">
-                {{ getArtistNames(item.artists) }}</v-card-subtitle
-              >
-            </v-card>
-          </v-slide-x-transition>
-        </v-col>
-      </v-row>
+      <h1>My Top Tracks</h1>
+      <br />
+      <div class="track-container">
+        <TrackCard
+          v-for="track in myTopTracks.slice(0, 5)"
+          :track="track"
+          :is-loading="isLoading"
+        />
+      </div>
     </div>
 
     <br />
@@ -141,8 +102,19 @@ export default {
   </div>
 </template>
 
-<style>
+<style scoped>
 tbody tr:nth-of-type(even) {
   background-color: #373535;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.track-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
 }
 </style>
