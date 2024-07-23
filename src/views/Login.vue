@@ -1,8 +1,8 @@
 <script lang="ts">
 import getUserProfile from "@/helpers/getUserProfile";
 import type User from "@/models/User";
-import tokenStore from "@/stores/tokenStore";
-import userStore from "@/stores/userStore";
+import useTokenStore from "@/stores/token";
+import useUserStore from "@/stores/user";
 
 export default {
   data() {
@@ -14,9 +14,9 @@ export default {
 
   setup() {
     sessionStorage.clear();
-    const store = tokenStore();
+    const store = useTokenStore();
     store.clearToken();
-    const uStore = userStore();
+    const uStore = useUserStore();
     uStore.clearUser();
 
     return {

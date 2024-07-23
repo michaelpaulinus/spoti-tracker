@@ -1,7 +1,7 @@
 <script lang="ts">
 import type Artist from "@/models/Artist";
 import getTopArtists from "@/helpers/getTopArtists";
-import tokenStore from "@/stores/tokenStore";
+import useTokenStore from "@/stores/token";
 import ArtistCard from "@/components/ArtistCard.vue";
 
 export default {
@@ -21,7 +21,7 @@ export default {
       defaultTimeRange: "short_term",
       myTopArtists: [] as Artist[],
       accessToken: "",
-      accessTokenStore: tokenStore(),
+      accessTokenStore: useTokenStore(),
       artistHeaders: [
         { title: "Name", value: "name" },
         { title: "Genres", value: "genres[0]" },

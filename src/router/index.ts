@@ -4,7 +4,7 @@ import Home from "@/views/Home.vue";
 import Artists from "@/views/Artists.vue";
 import Tracks from "@/views/Tracks.vue";
 import Recommendations from "@/views/Recommendations.vue";
-import tokenStore from "@/stores/tokenStore";
+import useTokenStore from "@/stores/token";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -50,7 +50,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, _from, next) => {
-  const store = tokenStore();
+  const store = useTokenStore();
 
   if (
     to.matched.some((value) => value.meta.requiresAuth) &&

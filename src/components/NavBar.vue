@@ -1,16 +1,16 @@
 <script lang="ts">
 import router from "@/router";
 import { RouterLink, RouterView } from "vue-router";
-import tokenStore from "@/stores/tokenStore";
-import userStore from "@/stores/userStore";
+import useTokenStore from "@/stores/token";
+import useUserStore from "@/stores/user";
 
 export default {
   data() {
     return {
       tab: "short_term",
       pageTab: "home",
-      accessTokenStore: tokenStore(),
-      userTokenStore: userStore(),
+      accessTokenStore: useTokenStore(),
+      userTokenStore: useUserStore(),
     };
   },
 

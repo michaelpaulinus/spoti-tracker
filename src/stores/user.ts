@@ -5,7 +5,7 @@ type State = {
   user: User;
 };
 
-const userStore = defineStore("userStore", {
+const useUserStore = defineStore("userStore", {
   persist: true,
   state: (): State => ({
     user: {
@@ -52,4 +52,4 @@ const userStore = defineStore("userStore", {
   },
 });
 
-export default userStore;
+export default useUserStore;

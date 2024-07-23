@@ -2,7 +2,7 @@
 import type Artist from "@/models/Artist";
 import type Track from "@/models/Track";
 import getTopTracks from "@/helpers/getTopTracks";
-import tokenStore from "@/stores/tokenStore";
+import useTokenStore from "@/stores/token";
 import TrackCard from "@/components/TrackCard.vue";
 
 export default {
@@ -22,7 +22,7 @@ export default {
       defaultTimeRange: "short_term",
       myTopTracks: [] as Track[],
       accessToken: "",
-      accessTokenStore: tokenStore(),
+      accessTokenStore: useTokenStore(),
       artistHeaders: [
         { title: "Name", value: "name" },
         { title: "Followers", value: "followers.total" },

@@ -5,7 +5,7 @@ type State = {
   isAuthenticated: boolean;
 };
 
-const tokenStore = defineStore("tokenStore", {
+const useTokenStore = defineStore("token", {
   persist: true,
   state: (): State => ({
     token: "",
@@ -28,4 +28,4 @@ const tokenStore = defineStore("tokenStore", {
   },
 });
 
-export default tokenStore;
+export default useTokenStore;

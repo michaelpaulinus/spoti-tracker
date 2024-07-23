@@ -1,8 +1,8 @@
 <script lang="ts">
 import type Artist from "@/models/Artist";
 import type Track from "@/models/Track";
-import tokenStore from "@/stores/tokenStore";
-import userStore from "@/stores/userStore";
+import useTokenStore from "@/stores/token";
+import useUserStore from "@/stores/user";
 import type User from "@/models/User";
 import getTopArtists from "@/helpers/getTopArtists";
 import getTopTracks from "@/helpers/getTopTracks";
@@ -18,8 +18,8 @@ export default {
   },
 
   setup() {
-    const store = tokenStore();
-    const uStore = userStore();
+    const store = useTokenStore();
+    const uStore = useUserStore();
 
     return {
       store,
@@ -33,9 +33,9 @@ export default {
       myTopArtists: [] as Artist[],
       myTopTracks: [] as Track[],
       accessToken: "",
-      accessTokenStore: tokenStore(),
+      accessTokenStore: useTokenStore(),
       user: {} as User,
-      userTokenStore: userStore(),
+      userTokenStore: useUserStore(),
       clientId: import.meta.env.VITE_CLIENT_ID,
       artistHeaders: [
         { title: "Name", value: "name" },
