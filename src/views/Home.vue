@@ -44,20 +44,24 @@ export default {
 
 	methods: {
 		async changeTimePeriod(time: string) {
-			this.defaultTimeRange = time;
-			this.isLoading = true;
+			try {
+				this.isLoading = true;
+				this.defaultTimeRange = time;
 
-			this.myTopArtists = await getTopArtists(
-				this.accessToken,
-				this.defaultTimeRange
-			);
+				this.myTopArtists = await getTopArtists(
+					this.accessToken,
+					this.defaultTimeRange
+				);
 
-			this.myTopTracks = await getTopTracks(
-				this.accessToken,
-				this.defaultTimeRange
-			);
-
-			this.isLoading = false;
+				this.myTopTracks = await getTopTracks(
+					this.accessToken,
+					this.defaultTimeRange
+				);
+			} catch (error) {
+				console.error('Unable to change time period: ', error);
+			} finally {
+				this.isLoading = false;
+			}
 		},
 
 		async getAccessToken(clientId: string, code: string): Promise<string> {
@@ -96,23 +100,11 @@ export default {
 			this.accessToken = this.accessTokenStore.getToken;
 			this.user = this.userStore.getUser;
 		}
-
-		this.isLoading = true;
-
-		this.myTopArtists = await getTopArtists(
-			this.accessToken,
-			this.defaultTimeRange
-		);
-
-		this.myTopTracks = await getTopTracks(
-			this.accessToken,
-			this.defaultTimeRange
-		);
-
-		this.isLoading = false;
 	},
 
-	mounted() {
+	async mounted() {
+		await this.changeTimePeriod(this.defaultTimeRange);
+
 		(this as any).$emitter.on('new_time_range', (timeRange: string) =>
 			this.changeTimePeriod(timeRange)
 		);
