@@ -14,6 +14,10 @@ export default {
 		};
 	},
 
+	created() {
+		this.tokenStore.clearToken();
+	},
+
 	methods: {
 		async spotifyAuth() {
 			const clientId = import.meta.env.VITE_CLIENT_ID;
