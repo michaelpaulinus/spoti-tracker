@@ -1,8 +1,8 @@
 <script lang="ts">
-import type Artist from '@/models/Artist';
-import getTopArtists from '@/helpers/getTopArtists';
-import useTokenStore from '@/stores/token';
-import ArtistCard from '@/components/ArtistCard.vue';
+import type Artist from "@/models/Artist";
+import getTopArtists from "@/helpers/getTopArtists";
+import useTokenStore from "@/stores/token";
+import ArtistCard from "@/components/ArtistCard.vue";
 
 export default {
 	components: {
@@ -18,15 +18,15 @@ export default {
 
 	data() {
 		return {
-			defaultTimeRange: 'short_term',
+			defaultTimeRange: "short_term",
 			myTopArtists: [] as Artist[],
-			accessToken: '',
+			accessToken: "",
 			accessTokenStore: useTokenStore(),
 			artistHeaders: [
-				{ title: 'Name', value: 'name' },
-				{ title: 'Genres', value: 'genres[0]' },
-				{ title: 'Followers', value: 'followers.total' },
-				{ title: 'Popularity', value: 'popularity' },
+				{ title: "Name", value: "name" },
+				{ title: "Genres", value: "genres[0]" },
+				{ title: "Followers", value: "followers.total" },
+				{ title: "Popularity", value: "popularity" },
 			],
 			isLoading: true,
 		};
@@ -39,14 +39,14 @@ export default {
 				this.defaultTimeRange = time;
 				this.myTopArtists = await getTopArtists(this.accessToken, time);
 			} catch (error) {
-				console.error('Unable to change time period: ', error);
+				console.error("Unable to change time period: ", error);
 			} finally {
 				this.isLoading = false;
 			}
 		},
 
 		formatNumbers(num: number) {
-			return num.toLocaleString('en-US');
+			return num.toLocaleString("en-US");
 		},
 	},
 
@@ -59,8 +59,8 @@ export default {
 			await this.changeTimePeriod(this.timeRange);
 		}
 
-		(this as any).$emitter.on('new_time_range', (timeRange: string) =>
-			this.changeTimePeriod(timeRange)
+		(this as any).$emitter.on("new_time_range", (timeRange: string) =>
+			this.changeTimePeriod(timeRange),
 		);
 	},
 };

@@ -1,22 +1,22 @@
 <script lang="ts">
-import router from '@/router';
-import { RouterLink, RouterView } from 'vue-router';
-import useTokenStore from '@/stores/token';
-import useUserStore from '@/stores/user';
+import router from "@/router";
+import { RouterLink, RouterView } from "vue-router";
+import useTokenStore from "@/stores/token";
+import useUserStore from "@/stores/user";
 
 export default {
 	data() {
 		return {
-			tab: 'short_term',
-			pageTab: 'home',
+			tab: "short_term",
+			pageTab: "home",
 			accessTokenStore: useTokenStore(),
 			userTokenStore: useUserStore(),
 		};
 	},
 
 	created() {
-		this.tab = sessionStorage.getItem('tab') || '';
-		this.pageTab = sessionStorage.getItem('pageTab') || '';
+		this.tab = sessionStorage.getItem("tab") || "";
+		this.pageTab = sessionStorage.getItem("pageTab") || "";
 	},
 
 	methods: {
@@ -27,36 +27,36 @@ export default {
 		navigateToLogin() {
 			this.accessTokenStore.clearToken();
 			this.userTokenStore.clearUser();
-			router.push('/');
+			router.push("/");
 		},
 
 		navigateToHome() {
-			router.push({ name: 'Home' });
-			this.pageTab = 'home';
-			sessionStorage.setItem('pageTab', this.pageTab);
+			router.push({ name: "Home" });
+			this.pageTab = "home";
+			sessionStorage.setItem("pageTab", this.pageTab);
 		},
 
 		navigateToArtists() {
-			router.push({ name: 'Artists', params: { timeRange: this.tab } });
-			this.pageTab = 'artists';
-			sessionStorage.setItem('pageTab', this.pageTab);
+			router.push({ name: "Artists", params: { timeRange: this.tab } });
+			this.pageTab = "artists";
+			sessionStorage.setItem("pageTab", this.pageTab);
 		},
 
 		navigateToTracks() {
-			router.push({ name: 'Tracks', params: { timeRange: this.tab } });
-			this.pageTab = 'tracks';
-			sessionStorage.setItem('pageTab', this.pageTab);
+			router.push({ name: "Tracks", params: { timeRange: this.tab } });
+			this.pageTab = "tracks";
+			sessionStorage.setItem("pageTab", this.pageTab);
 		},
 
 		navigateToRecommendations() {
-			router.push({ name: 'Recommendations', params: { timeRange: this.tab } });
-			this.pageTab = 'recommendations';
-			sessionStorage.setItem('pageTab', this.pageTab);
+			router.push({ name: "Recommendations", params: { timeRange: this.tab } });
+			this.pageTab = "recommendations";
+			sessionStorage.setItem("pageTab", this.pageTab);
 		},
 
 		changeTimePeriod() {
-			(this as any).$emitter.emit('new_time_range', this.tab);
-			sessionStorage.setItem('tab', this.tab);
+			(this as any).$emitter.emit("new_time_range", this.tab);
+			sessionStorage.setItem("tab", this.tab);
 		},
 	},
 };

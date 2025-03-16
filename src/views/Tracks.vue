@@ -1,9 +1,9 @@
 <script lang="ts">
-import type Artist from '@/models/Artist';
-import type Track from '@/models/Track';
-import getTopTracks from '@/helpers/getTopTracks';
-import useTokenStore from '@/stores/token';
-import TrackCard from '@/components/TrackCard.vue';
+import type Artist from "@/models/Artist";
+import type Track from "@/models/Track";
+import getTopTracks from "@/helpers/getTopTracks";
+import useTokenStore from "@/stores/token";
+import TrackCard from "@/components/TrackCard.vue";
 
 export default {
 	components: {
@@ -19,20 +19,20 @@ export default {
 
 	data() {
 		return {
-			defaultTimeRange: 'short_term',
+			defaultTimeRange: "short_term",
 			myTopTracks: [] as Track[],
-			accessToken: '',
+			accessToken: "",
 			accessTokenStore: useTokenStore(),
 			artistHeaders: [
-				{ title: 'Name', value: 'name' },
-				{ title: 'Followers', value: 'followers.total' },
-				{ title: 'Popularity', value: 'popularity' },
+				{ title: "Name", value: "name" },
+				{ title: "Followers", value: "followers.total" },
+				{ title: "Popularity", value: "popularity" },
 			],
 			trackHeaders: [
-				{ title: 'Name', value: 'name' },
-				{ title: 'Artists', value: 'artists' },
-				{ title: 'Album', value: 'album.name' },
-				{ title: 'Popularity', value: 'popularity' },
+				{ title: "Name", value: "name" },
+				{ title: "Artists", value: "artists" },
+				{ title: "Album", value: "album.name" },
+				{ title: "Popularity", value: "popularity" },
 			],
 			isLoading: true,
 		};
@@ -45,14 +45,14 @@ export default {
 				this.defaultTimeRange = time;
 				this.myTopTracks = await getTopTracks(this.accessToken, time);
 			} catch (error) {
-				console.error('Unable to change time period: ', error);
+				console.error("Unable to change time period: ", error);
 			} finally {
 				this.isLoading = false;
 			}
 		},
 
 		getArtistNames(artists: Artist[]) {
-			return artists.map((a) => a.name).join(', ');
+			return artists.map((a) => a.name).join(", ");
 		},
 	},
 
@@ -64,8 +64,8 @@ export default {
 		if (this.timeRange) {
 			await this.changeTimePeriod(this.timeRange);
 		}
-		(this as any).$emitter.on('new_time_range', (timeRange: string) =>
-			this.changeTimePeriod(timeRange)
+		(this as any).$emitter.on("new_time_range", (timeRange: string) =>
+			this.changeTimePeriod(timeRange),
 		);
 	},
 };

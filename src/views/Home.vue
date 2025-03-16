@@ -1,15 +1,15 @@
 <script lang="ts">
-import type Artist from '@/models/Artist';
-import type Track from '@/models/Track';
-import useTokenStore from '@/stores/token';
-import useUserStore from '@/stores/user';
-import type User from '@/models/User';
-import getTopArtists from '@/helpers/getTopArtists';
-import getTopTracks from '@/helpers/getTopTracks';
-import getUserProfile from '@/helpers/getUserProfile';
-import router from '@/router';
-import TrackCard from '@/components/TrackCard.vue';
-import ArtistCard from '@/components/ArtistCard.vue';
+import type Artist from "@/models/Artist";
+import type Track from "@/models/Track";
+import useTokenStore from "@/stores/token";
+import useUserStore from "@/stores/user";
+import type User from "@/models/User";
+import getTopArtists from "@/helpers/getTopArtists";
+import getTopTracks from "@/helpers/getTopTracks";
+import getUserProfile from "@/helpers/getUserProfile";
+import router from "@/router";
+import TrackCard from "@/components/TrackCard.vue";
+import ArtistCard from "@/components/ArtistCard.vue";
 
 export default {
 	components: {
@@ -19,24 +19,24 @@ export default {
 
 	data() {
 		return {
-			defaultTimeRange: 'short_term',
+			defaultTimeRange: "short_term",
 			myTopArtists: [] as Artist[],
 			myTopTracks: [] as Track[],
-			accessToken: '',
+			accessToken: "",
 			accessTokenStore: useTokenStore(),
 			user: {} as User,
 			userStore: useUserStore(),
 			clientId: import.meta.env.VITE_CLIENT_ID,
 			artistHeaders: [
-				{ title: 'Name', value: 'name' },
-				{ title: 'Followers', value: 'followers.total' },
-				{ title: 'Popularity', value: 'popularity' },
+				{ title: "Name", value: "name" },
+				{ title: "Followers", value: "followers.total" },
+				{ title: "Popularity", value: "popularity" },
 			],
 			trackHeaders: [
-				{ title: 'Name', value: 'name' },
-				{ title: 'Artists', value: 'artists[0].name' },
-				{ title: 'Album', value: 'album.name' },
-				{ title: 'Popularity', value: 'popularity' },
+				{ title: "Name", value: "name" },
+				{ title: "Artists", value: "artists[0].name" },
+				{ title: "Album", value: "album.name" },
+				{ title: "Popularity", value: "popularity" },
 			],
 			isLoading: true,
 		};
@@ -50,33 +50,33 @@ export default {
 
 				this.myTopArtists = await getTopArtists(
 					this.accessToken,
-					this.defaultTimeRange
+					this.defaultTimeRange,
 				);
 
 				this.myTopTracks = await getTopTracks(
 					this.accessToken,
-					this.defaultTimeRange
+					this.defaultTimeRange,
 				);
 			} catch (error) {
-				console.error('Unable to change time period: ', error);
+				console.error("Unable to change time period: ", error);
 			} finally {
 				this.isLoading = false;
 			}
 		},
 
 		async getAccessToken(clientId: string, code: string): Promise<string> {
-			const verifier = localStorage.getItem('verifier');
+			const verifier = localStorage.getItem("verifier");
 
 			const params = new URLSearchParams();
-			params.append('client_id', clientId);
-			params.append('grant_type', 'authorization_code');
-			params.append('code', code);
-			params.append('redirect_uri', import.meta.env.VITE_REDIRECT_URI);
-			params.append('code_verifier', verifier!);
+			params.append("client_id", clientId);
+			params.append("grant_type", "authorization_code");
+			params.append("code", code);
+			params.append("redirect_uri", import.meta.env.VITE_REDIRECT_URI);
+			params.append("code_verifier", verifier!);
 
-			const result = await fetch('https://accounts.spotify.com/api/token', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			const result = await fetch("https://accounts.spotify.com/api/token", {
+				method: "POST",
+				headers: { "Content-Type": "application/x-www-form-urlencoded" },
 				body: params,
 			});
 
@@ -88,14 +88,14 @@ export default {
 
 	async created() {
 		const params = new URLSearchParams(window.location.search);
-		const code = params.get('code') || '';
+		const code = params.get("code") || "";
 
-		if (code !== '') {
+		if (code !== "") {
 			this.accessToken = await this.getAccessToken(this.clientId, code);
 			this.accessTokenStore.setToken(this.accessToken);
 			this.user = await getUserProfile(this.accessToken);
 			this.userStore.setUser(this.user);
-			router.push('/home');
+			router.push("/home");
 		} else {
 			this.accessToken = this.accessTokenStore.getToken;
 			this.user = this.userStore.getUser;
@@ -105,8 +105,8 @@ export default {
 	async mounted() {
 		await this.changeTimePeriod(this.defaultTimeRange);
 
-		(this as any).$emitter.on('new_time_range', (timeRange: string) =>
-			this.changeTimePeriod(timeRange)
+		(this as any).$emitter.on("new_time_range", (timeRange: string) =>
+			this.changeTimePeriod(timeRange),
 		);
 	},
 };

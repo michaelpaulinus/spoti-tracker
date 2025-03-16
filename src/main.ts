@@ -13,11 +13,11 @@ import "vue-toastification/dist/index.css";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 
 const vuetify = createVuetify({
-  theme: {
-    defaultTheme: "dark",
-  },
-  components,
-  directives,
+	theme: {
+		defaultTheme: "dark",
+	},
+	components,
+	directives,
 });
 
 const emitter = mitt();

@@ -1,9 +1,9 @@
 <script lang="ts">
-import type Artist from '@/models/Artist';
-import type Track from '@/models/Track';
-import getRecommendations from '@/helpers/getRecommendations';
-import useTokenStore from '@/stores/token';
-import TrackCard from '@/components/TrackCard.vue';
+import type Artist from "@/models/Artist";
+import type Track from "@/models/Track";
+import getRecommendations from "@/helpers/getRecommendations";
+import useTokenStore from "@/stores/token";
+import TrackCard from "@/components/TrackCard.vue";
 
 export default {
 	components: {
@@ -19,15 +19,15 @@ export default {
 
 	data() {
 		return {
-			defaultTimeRange: 'short_term',
+			defaultTimeRange: "short_term",
 			myRecommendedTracks: [] as Track[],
-			accessToken: '',
+			accessToken: "",
 			accessTokenStore: useTokenStore(),
 			trackHeaders: [
-				{ title: 'Name', value: 'name' },
-				{ title: 'Artists', value: 'artists' },
-				{ title: 'Album', value: 'album.name' },
-				{ title: 'Popularity', value: 'popularity' },
+				{ title: "Name", value: "name" },
+				{ title: "Artists", value: "artists" },
+				{ title: "Album", value: "album.name" },
+				{ title: "Popularity", value: "popularity" },
 			],
 			isLoading: true,
 			currentAudio: null as HTMLAudioElement | null,
@@ -41,10 +41,10 @@ export default {
 				this.defaultTimeRange = time;
 				this.myRecommendedTracks = await getRecommendations(
 					this.accessToken,
-					time
+					time,
 				);
 			} catch (error) {
-				console.error('Unable to change time period: ', error);
+				console.error("Unable to change time period: ", error);
 			} finally {
 				this.isLoading = false;
 			}
@@ -67,7 +67,7 @@ export default {
 		},
 
 		getArtistNames(artists: Artist[]) {
-			return artists.map((a) => a.name).join(', ');
+			return artists.map((a) => a.name).join(", ");
 		},
 	},
 
@@ -80,8 +80,8 @@ export default {
 			await this.changeTimePeriod(this.timeRange);
 		}
 
-		(this as any).$emitter.on('new_time_range', (timeRange: string) =>
-			this.changeTimePeriod(timeRange)
+		(this as any).$emitter.on("new_time_range", (timeRange: string) =>
+			this.changeTimePeriod(timeRange),
 		);
 	},
 };

@@ -1,10 +1,10 @@
-import type User from '@/models/User';
-import type TopArtistsResponse from '@/models/TopArtists';
-import type TopTracksResponse from '@/models/TopTracks';
-import type Recommendations from '@/models/Recommendations';
-import spotifyClient from '@/configs/spotifyClient';
-import getTopTracks from '@/helpers/getTopTracks';
-import getTopArtists from '@/helpers/getTopArtists';
+import type User from "@/models/User";
+import type TopArtistsResponse from "@/models/TopArtists";
+import type TopTracksResponse from "@/models/TopTracks";
+import type Recommendations from "@/models/Recommendations";
+import spotifyClient from "@/configs/spotifyClient";
+import getTopTracks from "@/helpers/getTopTracks";
+import getTopArtists from "@/helpers/getTopArtists";
 
 const limit = 10;
 
@@ -22,7 +22,7 @@ class SpotifyService {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
-			}
+			},
 		);
 	}
 
@@ -33,7 +33,7 @@ class SpotifyService {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
-			}
+			},
 		);
 	}
 
@@ -46,14 +46,14 @@ class SpotifyService {
 		return await spotifyClient.get<Recommendations>(
 			`recommendations?seed_tracks=${topTracksIds
 				.slice(0, 2)
-				.join(',')}&seed_artists=${topArtistsIds
+				.join(",")}&seed_artists=${topArtistsIds
 				.slice(0, 3)
-				.join(',')}&limit=${limit}&target_popularity=90`,
+				.join(",")}&limit=${limit}&target_popularity=90`,
 			{
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
-			}
+			},
 		);
 	}
 }
