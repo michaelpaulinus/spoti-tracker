@@ -17,6 +17,8 @@ The application can be accessed here: https://spoti-tracker.netlify.app/
 npm install
 ```
 
+Create a `.env` file following the structure of the `.env.example` file.
+
 ### Compile and Hot-Reload for Development
 
 ```sh
