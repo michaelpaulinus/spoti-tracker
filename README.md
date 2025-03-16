@@ -1,8 +1,15 @@
 # Spoti-Tracker
 
-This is a Spotify wrapped clone that shows users their top artists and tracks for the last 4 weeks, 6 months and 12 months.
+This is a Spotify wrapped clone that shows users their top artists and tracks
+for the last 4 weeks, 6 months and 12 months.
 
 The application can be accessed here: https://spoti-tracker.netlify.app/
+
+## Pre-requisites
+
+- Node.js (v20 or later)
+- npm
+- Spotify account
 
 ## Project Setup
 
